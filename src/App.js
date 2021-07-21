@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
+import StartTheGame from './components/startTheGame';
+import BoradGame from './components/boradGame';
+import { GameContext } from './context/context';
 
 function App() {
+
+  const { startNewGameFun, startNewGame } = useContext(GameContext);
+
+  useEffect(() => {
+    console.log('context', startNewGame)
+  }, [startNewGame])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <main>
+        <section className="splashScreenContainer">
+        <StartTheGame />
+          {startNewGame ?
+            ( <BoradGame />
+            ) : ''
+          }
+          <div className="startingNow">
+            </div>
+        </section>
+      </main>
     </div>
   );
 }
