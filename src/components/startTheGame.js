@@ -8,7 +8,7 @@ import './startTheGame.css';
     const [playNow, setTheGame] = useState(false);
     
     useEffect(() => {
-        
+        if(playNow)
         startNewGameFun(playNow);
         
     },[playNow])

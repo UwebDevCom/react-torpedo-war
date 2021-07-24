@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
 import StartTheGame from './components/startTheGame';
+import GameResults from './components/gameResults';
 import BoradGame from './components/boradGame';
 import { GameContext } from './context/context';
 
 function App() {
 
-  const { startNewGameFun, startNewGame } = useContext(GameContext);
+  const { startNewGame } = useContext(GameContext);
 
   useEffect(() => {
-    console.log('context', startNewGame)
   }, [startNewGame])
 
   return (
@@ -20,7 +20,11 @@ function App() {
         <section className="splashScreenContainer">
         <StartTheGame />
           {startNewGame ?
-            ( <BoradGame />
+
+            (<div>
+              <GameResults />
+              <BoradGame />
+            </div>
             ) : ''
           }
           <div className="startingNow">

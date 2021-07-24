@@ -1,0 +1,69 @@
+.gameResultsWrapper
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+.gameResultsContainer
+{
+    padding: 0;
+    border-top: 2px solid #a0a0a0;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.8);
+    height: 0;
+    transition: all .3s;
+}
+
+.gameResultsContainer ul {
+    text-align: center;
+    padding: 10px;
+    margin: 0 auto;
+    list-style: none;
+    max-width: 480px;
+}
+
+.gameResultsContainer ul li{
+   
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+.gameResultsContainer ul li > div{
+    flex: 1;
+    margin: 0;
+}
+.gameResultsContainer ul li img{
+    width: 20px;
+}
+.gameResultsContainer.show { 
+    padding: 20px;
+    height: auto;
+}
+.strikesResultsContainer
+{
+    margin-left: 10px;
+    font-size: 12px;
+    opacity: .5;
+}
+.strikeCount
+{
+    color: yellow;
+    font-weight: bold;
+    font-size: 18px;
+}
+.showResultsBtn{
+    position: absolute;
+    top: -36px;
+    left: 64vw;
+    font-size: 12px;
+    color: #fff;
+    background-image: url('../assets/buuton-show-results.png');
+    background-position: center center;
+    background-size: 100%;
+    padding: 10px 40px;
+    border-radius: 10px 10px 0 0;
+}

@@ -4,22 +4,24 @@ import './boardGame.css';
 import ImageOfSubmarine from './imageOfSubmarine';
 
 function BoradGame() {
-    const { boardData ,totalSubmarines} = useContext(GameContext);
+    const { boardData ,totalSubmarines , resultsDataFun} = useContext(GameContext);
     const [count, setCount] = useState(0);
     const [isFinished, setGameStatus] = useState(false);
     
-    const findSubmarines = (e,isSub, id) => {
+    const findSubmarines = (e,item) => {
         if (e.currentTarget.classList.contains("clicked")){
             return null
         }
         e.preventDefault();
         e.currentTarget.classList.add('clicked');
-        if(isSub){
+        if(item.isSubmarine){
             setCount(count+1);
-        e.currentTarget.classList.add('isSub');
-        alert('strike!, '+ id)
+            item.isSubmarineFound = true;
+            e.currentTarget.classList.add('isSub');
         }
+        resultsDataFun(item);
     }
+    
     useEffect(()=>{
         if (count === totalSubmarines){
             setGameStatus(true);
@@ -33,7 +35,7 @@ function BoradGame() {
             if (item.x === 0) {
                 y.push(item.y);
             }
-            if (item.y === 'a') {
+            if (item.y === 'A') {
                 x.push(item.x);
             }
         })
@@ -53,12 +55,12 @@ function BoradGame() {
             {createAxises()}
             {
                 boardData && boardData.map(item =>
-                    <>
-                    <button onClick={(e) => findSubmarines(e, item.isSubmarine, item.id)}
-                    key={item.id} data-id={item.id} className="gameKey"
-                    aria-level={item.x + item.y}>
+                    <React.Fragment  key={item.id}>
+                    <button aria-live={item.isSubmarineFound ? item.x + item.y : null} onClick={(e) => findSubmarines(e, item)}
+                    data-id={item.id} className="gameKey"
+                    aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine data={item} /> : null} </button>
-                    </>)
+                    </React.Fragment>)
             }
         </div> : <div className="finishGame"><span>You Win</span><button onClick={()=>window.location.reload()}>Again</button></div>}
         </>

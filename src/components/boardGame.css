@@ -1,5 +1,4 @@
-.board-container
-{
+.board-container {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -12,35 +11,41 @@
     animation: fadeInBoard 3s forwards;
 }
 
-button.gameKey
-{
+button.gameKey {
     flex: 10%;
     width: 20px;
     height: 10%;
     position: relative;
     border: 1px solid #fff;
     cursor: pointer;
-    background-color: rgba(0,0,0,0.3)
+    background-color: rgba(0, 0, 0, 0.3)
 }
 
-.y-axis , .x-axis
-{
+button.gameKey:hover {
+    background-color: rgba(3, 215, 252, .6);
+}
+
+button.gameKey:focus {
+    background-color: rgba(3, 215, 252, .6);
+}
+
+.y-axis, .x-axis {
     color: #fff;
     width: 100%;
-
 }
-.x-axis{
+
+.x-axis {
     display: flex;
     justify-content: space-between;
 }
-.x-axis span
-{
+
+.x-axis span {
     flex: 1;
     text-align: center;
     margin-bottom: 10px;
 }
 
-.y-axis{
+.y-axis {
     position: absolute;
     left: -24px;
     top: 43px;
@@ -50,7 +55,7 @@ button.gameKey
     justify-content: space-between;
 }
 
-button.gameKey img{
+button.gameKey img {
     position: absolute;
     top: 51%;
     left: -1px;
@@ -58,17 +63,15 @@ button.gameKey img{
     right: -1px;
 }
 
-.clicked
-{
-    background-color: gray !important;
-}
-.isSub{
-    background-color: gold !important;
-
+.clicked {
+    background-color: #03fc1c !important;
 }
 
-.finishGame
-{
+.isSub {
+    background-color: #fc2803 !important;
+}
+
+.finishGame {
     text-align: center;
     position: absolute;
     top: 50%;
@@ -80,14 +83,15 @@ button.gameKey img{
     border: 3px solid #e3e3e3;
     display: flex;
     flex-direction: column;
-
 }
-.finishGame span{
+
+.finishGame span {
     font-size: 30px;
     color: #fff;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: auto;
 }
+
 .finishGame button {
     border: none;
     display: inline-block;
@@ -107,9 +111,29 @@ button.gameKey img{
     cursor: pointer;
     transition: all .3s;
 }
+
 @keyframes fadeInBoard {
-    0% {opacity:0;}
-    30% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width:960px) {
+    .board-container {
+        top: 37% ;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 254px;
+        height: 272px;
+    }
+    .showResultsBtn{
+      left: 50% !important;
+      transform: translate(-50%);
   }
-  
+  }

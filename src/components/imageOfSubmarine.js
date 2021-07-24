@@ -13,4 +13,3 @@ import one from '../assets/one.svg';
 }
 
 export default ImageOfSubmarine;
-// {`./${ImgSubmarine}.svg`}
