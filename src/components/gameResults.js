@@ -15,16 +15,16 @@ function GameResults() {
             <ul>
             {resultsData.map((item)=>{
                return (
-                <li key={item.id}>
-                    <div>
+                <li key={Math.round(Math.random()*1000)}>
+                    <div className="row-small">
                     <span>{item.count}</span><span>X</span>
                     </div>
-                    <div className="d-flex">
+                    <div className="d-flex row-big">
                     {item.data.map((sq, i)=>{
                         if(i === 0) {
-                       return <React.Fragment key={Math.random()}>
+                       return <React.Fragment key={Math.random()*1000}>
                            {sq.data.map((item)=>{
-                           return <ImageOfSubmarine key={Math.random()*item.id} data={item}/>
+                           return <ImageOfSubmarine key={Math.random()*101010} data={item}/>
                        })}
                        </React.Fragment>
                     }
@@ -32,7 +32,7 @@ function GameResults() {
                     <span  className="strikesResultsContainer">{item.size+1} X 1</span>
                     </div>
                     <div>
-                        strikes : {item.found > 0 ? <span className="strikeCount">{item.found}</span> :  0 } / {item.count}
+                    {item.found > 0 ? <span className="strikeCount">{item.found}</span> :  0 } / {item.count}
                     </div>
                 </li>
                )

@@ -42,7 +42,7 @@ function BoradGame() {
         return (
             <>
                 {<div className="x-axis">{x.map(x=><span key={x}>{x}</span>)}</div>}
-                {<div className="y-axis">{y.map(y=><span key={y}>{y}</span>)}</div>}
+                {<div className="y-axis">{y.map(y=><span key={y}><span class="inner-y-axis">{y}</span></span>)}</div>}
             </>
         )
     }
@@ -51,7 +51,11 @@ function BoradGame() {
         <>
         {!isFinished ?
         <div className="board-container">
-            
+            <div className="left"></div>
+            <div className="right"></div>
+            <div className="top"></div>
+            <div className="bottom"></div>
+
             {createAxises()}
             {
                 boardData && boardData.map(item =>
