@@ -40,7 +40,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
+    height: 36px;
 }
 .gameResultsContainer ul li > div{
     flex: 1;
@@ -58,6 +58,7 @@
     margin-left: 10px;
     font-size: 12px;
     opacity: .5;
+    align-self: center;
 }
 
 .strikeCount
@@ -70,7 +71,7 @@
     position: absolute;
     z-index: -1;
     top: -36px;
-    left: 50vw;
+    left: 80%;
     font-size: 12px;
     color: #fff;
     text-shadow: 0 0 10px rgba(255,0,0,1);

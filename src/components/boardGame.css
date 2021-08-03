@@ -123,6 +123,11 @@ button.gameKey img {
     right: -1px;
 }
 
+button.gameKey img.vertic{
+    top: 19%;
+transform: rotate(90deg);
+}
+
 .clicked {
     background-color: #03fc1c !important;
 }

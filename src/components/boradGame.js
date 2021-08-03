@@ -42,7 +42,7 @@ function BoradGame() {
         return (
             <>
                 {<div className="x-axis">{x.map(x=><span key={x}>{x}</span>)}</div>}
-                {<div className="y-axis">{y.map(y=><span key={y}><span class="inner-y-axis">{y}</span></span>)}</div>}
+                {<div className="y-axis">{y.map(y=><span key={y}><span className="inner-y-axis">{y}</span></span>)}</div>}
             </>
         )
     }
@@ -59,11 +59,11 @@ function BoradGame() {
             {createAxises()}
             {
                 boardData && boardData.map(item =>
-                    <React.Fragment  key={item.id}>
-                    <button aria-live={item.isSubmarineFound ? item.x + item.y : null} onClick={(e) => findSubmarines(e, item)}
+                    <React.Fragment key={item.id}>
+                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={(e) => findSubmarines(e, item)}
                     data-id={item.id} className="gameKey"
                     aria-label={item.x + item.y}>
-                    {item.isSubmarine ? <ImageOfSubmarine data={item} /> : null} </button>
+                    {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : null} </button>
                     </React.Fragment>)
             }
         </div> : <div className="finishGame"><span>You Win</span><button onClick={()=>window.location.reload()}>Again</button></div>}

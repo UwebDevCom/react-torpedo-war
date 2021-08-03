@@ -13,18 +13,15 @@ function GameResults() {
             <button className="showResultsBtn" onClick={()=>toggleResults(!isShow)} >RESULTS</button>
         <div className={isShow ? "gameResultsContainer show" : "gameResultsContainer"}>
             <ul>
-            {resultsData.map((item)=>{
+            {resultsData.map((item, i)=>{
                return (
-                <li key={Math.round(Math.random()*1000)}>
-                    <div className="row-small">
-                    <span>{item.count}</span><span>X</span>
-                    </div>
+                <li key={i + 'isItemSub'}>
                     <div className="d-flex row-big">
                     {item.data.map((sq, i)=>{
                         if(i === 0) {
-                       return <React.Fragment key={Math.random()*1000}>
-                           {sq.data.map((item)=>{
-                           return <ImageOfSubmarine key={Math.random()*101010} data={item}/>
+                       return <React.Fragment key={i + 'isdataofitemsub'}>
+                           {sq.data.map((item, i)=>{
+                           return <ImageOfSubmarine key={ i + 'someimageforsub'} data={item}/>
                        })}
                        </React.Fragment>
                     }

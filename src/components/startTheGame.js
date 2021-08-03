@@ -5,7 +5,7 @@ import './startTheGame.css';
  function StartTheGame() {
 
      const {startNewGameFun, startNewGame} = useContext(GameContext);
-    const [playNow, setTheGame] = useState(false);
+    const [playNow, setTheGame] = useState(true);
     
     useEffect(() => {
         if(playNow)
