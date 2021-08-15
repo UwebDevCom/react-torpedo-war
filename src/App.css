@@ -16,7 +16,7 @@ div.startingNow{
   min-width: 100vw;
   min-height: 100vh;
  animation: fadeIn 8s forwards;
- background-image: url('./assets/torpedo-battle-bg.jpg');
+ background-image: url('./assets/torpedo-battle-bg.png');
   background-size: cover;
 }
 

@@ -3,9 +3,9 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    /* width: 100%;
     max-width: 480px;
-    height: 480px;
+    height: 480px; */
     display: flex;
     flex-wrap: wrap;
     animation: fadeInBoard 3s forwards;
@@ -16,6 +16,7 @@
     top: 0;
     bottom: 0;
     width: 20px;
+
     background-size: cover;
     background-image: url('../assets/metal-border-hor.png');
 }
@@ -53,12 +54,13 @@
 button.gameKey {
     flex: 10%;
     width: 20px;
-    height: 10%;
     position: relative;
     border: 1px solid rgba(0,183,255,0.8);
     box-shadow: 0 0 10px #00b7ff;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.3)
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 0;
+    max-height: 50px;
 }
 
 button.gameKey:hover {
@@ -114,7 +116,15 @@ button.gameKey:focus {
     justify-content: space-between;
 }
 
-button.gameKey img {
+button.gameKey img.vertic {
+    position: absolute;
+    z-index: 1;
+    left: 51%;
+    top: -1px;
+    transform: translateX(-50%);
+    right: -1px;
+}
+button.gameKey img.horiz {
     position: absolute;
     z-index: 1;
     top: 51%;
@@ -123,11 +133,25 @@ button.gameKey img {
     right: -1px;
 }
 
-button.gameKey img.vertic{
-    top: 19%;
-transform: rotate(90deg);
+button.gameKey .vertic{
+/* transform: rotate(90deg); */
+width: 100%;
+    position: absolute;
+    background-position: center;
+    right: 0px;
+    left: 0px;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
+button.gameKey .horiz{
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .clicked {
     background-color: #03fc1c !important;
 }

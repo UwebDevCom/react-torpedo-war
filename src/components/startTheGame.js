@@ -1,21 +1,14 @@
 import React, {useState, useContext ,useEffect} from 'react';
 import {GameContext} from '../context/context';
 import './startTheGame.css';
+import SetGameForm from './setGameForm';
 
  function StartTheGame() {
 
-     const {startNewGameFun, startNewGame} = useContext(GameContext);
-    const [playNow, setTheGame] = useState(true);
-    
-    useEffect(() => {
-        if(playNow)
-        startNewGameFun(playNow);
-        
-    },[playNow])
+     const {startNewGame} = useContext(GameContext);
     return (
-        <div className={playNow ? "gameStartContainer moveDown" :  "gameStartContainer moveTop"}>
-            <span>Srart The Game</span>
-            <button className={playNow ? "displayNone" : "startButton"} onClick={()=>setTheGame(!playNow)}>START</button>
+        <div className={startNewGame ? "gameStartContainer moveDown" :  "gameStartContainer moveTop"}>
+            <SetGameForm />    
         </div>
     )
 }

@@ -4,7 +4,7 @@ import './boardGame.css';
 import ImageOfSubmarine from './imageOfSubmarine';
 
 function BoradGame() {
-    const { boardData ,totalSubmarines , resultsDataFun} = useContext(GameContext);
+    const { boardData ,totalSubmarines , resultsDataFun ,cols, rows} = useContext(GameContext);
     const [count, setCount] = useState(0);
     const [isFinished, setGameStatus] = useState(false);
     
@@ -61,7 +61,7 @@ function BoradGame() {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
                     <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={(e) => findSubmarines(e, item)}
-                    data-id={item.id} className="gameKey"
+                    data-id={item.id} className="gameKey" style={{flex:(100/cols)+'%', height:((window.innerWidth/2)/cols)+'px' }}
                     aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : null} </button>
                     </React.Fragment>)

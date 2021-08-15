@@ -1,10 +1,11 @@
 
-const abc = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+const abc = [];
 
-function generateData(size) {
+function generateData(cols, rows) {
     const boardData = [];
-    for (let i = 0; i < size; i++) {
-        for (let u = 0; u < size; u++) {
+    for (let i = 0; i < cols; i++) {
+        abc.push((i+10).toString(36).toUpperCase());
+        for (let u = 0; u < rows; u++) {
             boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed:false })
         }
     }
@@ -12,6 +13,7 @@ function generateData(size) {
 }
 
 function generateSubmarines(level, maxSize, data, boardSize) {
+
     let submarines = [];
     let dataBoard = [...data];
     
@@ -181,15 +183,21 @@ function getResults(submarines, level , action) {
 
 
 function gameReducer(state, action) {
-
     switch (action.type) {
-
-        case 'START':
-            state.level = 6
-            state.boardData = generateData(10);
-            state.submarines = generateSubmarines(10, state.level, state.boardData, 10);
+        case 'SET':
+            state.level = (+action.payload.difficolty);
+            state.rows = (+action.payload.rows);
+            state.cols = (+action.payload.columns);
+            state.numberOfShips = (+action.payload.ships);
+            state.boardData = generateData(state.rows, state.cols);
+            state.submarines = generateSubmarines(state.numberOfShips, state.level, state.boardData, state.cols);
             state.totalSubmarines = totalSubmarinesFun(state.submarines);
             state.resultsData = getResults(state.submarines, state.level);
+
+            return {
+                ...state,
+            }  
+        case 'START':
 
             return {
                 ...state,
