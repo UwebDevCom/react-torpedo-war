@@ -21,10 +21,10 @@ function App() {
         <StartTheGame />
           {startNewGame ?
 
-            (<div>
+            (<>
               <GameResults />
               <BoradGame />
-            </div>
+            </>
             ) : ''
           }
           <div className="startingNow">

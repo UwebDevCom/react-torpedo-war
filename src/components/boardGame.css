@@ -60,7 +60,7 @@ button.gameKey {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 0;
-    max-height: 50px;
+    /* max-height: 32px; */
 }
 
 button.gameKey:hover {
@@ -215,14 +215,33 @@ button.gameKey .horiz{
 
 @media screen and (max-width:960px) {
     .board-container {
-        top: 37% ;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        max-width: 254px;
-        height: 272px;
+        left: 0;
+        transform: translate(0, -50%);
+        margin: 30px;
     }
     .showResultsBtn{
       left: 50% !important;
       transform: translate(-50%);
   }
+  }
+
+  @media screen and (max-width:560px) {
+    .gameStartContainer{
+        background-size: 410px;
+    }
+    .gameStartContainer form
+    {
+        bottom: 62px;
+    }
+    .gameStartContainer .form-group{
+        margin: 5px 0;
+    }
+    .gameStartContainer .form-group input{
+        padding: 6px 10px;
+    }
+    .gameStartContainer .form-group label{
+    font-size: 12px;
+    margin-top: 2px;
+    left: 10px;
+    }
   }

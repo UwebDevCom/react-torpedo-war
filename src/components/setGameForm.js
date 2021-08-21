@@ -80,7 +80,7 @@ function SetGameForm(props) {
            {curretError ? <p className="errorsMessage">difficolty and ships count cannot be more than half of the board</p> : <p className="noErrors"></p>}
           {curretError 
              ? <button className="buttonStart" type="submit" >BUILD GAME</button>
-             : <button className="buttonStart" disabled={spinner} onClick={()=>setTheGame(!playNow)} type="button">{spinner ? <div class="loader"></div> : 'Play'}</button>
+             : <button className="buttonStart" disabled={spinner} onClick={()=>setTheGame(!playNow)} type="button">{spinner ? <div className="loader"></div> : 'Play'}</button>
           }
            
         </form>

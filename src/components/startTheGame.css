@@ -8,11 +8,12 @@
   transform: translate(-50%, -50%);
   background-image: url("../assets/pop-bg.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 80%;
   background-position: center;
   border-radius: 20px;
-  width: 560px;
-  height: 55vh;
+  width: 100%;
+  max-width: 560px;
+  height: 500px;
 }
 .gameStartContainer.moveTop {
   animation: popupStart 2s forwards;
@@ -57,7 +58,7 @@ form{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 42px;
+  bottom: 48px;
 }
 form .form-group {
   margin: 10px 0;
