@@ -46,7 +46,7 @@ function SetGameForm(props) {
             setSpinner(false)
           setNewGameData({...formData});
           setErrors(false)
-        }, 3000);
+        }, 1000);
         }
     }
 

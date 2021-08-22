@@ -3,10 +3,45 @@ const abc = [];
 
 function generateData(cols, rows) {
     const boardData = [];
+
+    const colsDiv = Math.floor(cols / 2);
+    const rowsDiv = Math.floor(rows / 2);
+    const colsRowsAvg = colsDiv / rowsDiv;
+    console.log(rowsDiv, colsDiv, colsRowsAvg)
+    let counterForRhombus = 0;
     for (let i = 0; i < cols; i++) {
-        abc.push((i+10).toString(36).toUpperCase());
+        abc.push((i + 10).toString(36).toUpperCase());
+        if (colsRowsAvg > 1) {
+            if (colsDiv >= i && i !== 0 && i % 2 === 0) {
+                counterForRhombus++;
+
+            } else if (colsDiv < i && i % 2 !== 0) {
+                counterForRhombus++;
+            }
+        } else if (colsRowsAvg < 1) {
+            if (colsDiv >= i && i !== 0) {
+                counterForRhombus = counterForRhombus +2;
+
+            } else if (colsDiv <= i ) {
+                counterForRhombus = counterForRhombus +2;
+            }
+        } else if (colsRowsAvg === 1) {
+            counterForRhombus = i;
+        }
         for (let u = 0; u < rows; u++) {
-            boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed:false })
+            if (colsRowsAvg < 1) {
+                if ( (rowsDiv -counterForRhombus > u ) || (rowsDiv + counterForRhombus < u ) || ((colsDiv < i) && u < counterForRhombus - rowsDiv) || ((colsDiv < i) && u >= (rows - (counterForRhombus - rowsDiv)))) {
+                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: false })
+                } else {
+                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: true })
+                }
+            } else {
+                if ((rowsDiv - counterForRhombus > u) || (rowsDiv + counterForRhombus < u) || ((colsDiv < i) && u < counterForRhombus - rowsDiv) || ((colsDiv < i) && u >= (rows - (counterForRhombus - rowsDiv)))) {
+                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: false })
+                } else {
+                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: true })
+                }
+            }
         }
     }
     return boardData;
@@ -16,18 +51,18 @@ function generateSubmarines(level, maxSize, data, boardSize) {
 
     let submarines = [];
     let dataBoard = [...data];
-    
-    function rotateShips(position){
-        if(position) {
-            dataBoard.sort((a,b)=>{
-                if (a.x > b.x )
-                return  1
-                else 
-                return -1
+
+    function rotateShips(position) {
+        if (position) {
+            dataBoard.sort((a, b) => {
+                if (a.x > b.x)
+                    return 1
+                else
+                    return -1
             });
         }
-        else {            
-            dataBoard.sort((a,b)=>{
+        else {
+            dataBoard.sort((a, b) => {
                 if (a.y > b.y) {
                     return -1;
                 } else {
@@ -36,37 +71,35 @@ function generateSubmarines(level, maxSize, data, boardSize) {
             })
         }
     }
-    
+
     while (submarines.length !== level) {
-        
+
         let submarineSize = Math.ceil(Math.random() * maxSize);
         let randomSquare = Math.ceil(Math.random() * dataBoard.length) - 1;
         let position = '';
         let randoRotate = Math.round(Math.random());
-        
-        if(randoRotate){
+
+        if (randoRotate) {
             position = 'vertic';
-        } else{
+        } else {
             position = 'horiz';
         }
-        
-        rotateShips(randoRotate);
-        
 
-        if (position === 'vertic'){
-            if ((0 < (abc.indexOf(dataBoard[randomSquare].y)+2) - submarineSize)) {
+        rotateShips(randoRotate);
+        if (position === 'vertic') {
+            if ((0 < (abc.indexOf(dataBoard[randomSquare].y) + 2) - submarineSize)) {
 
                 let submarineDataSquare = [];
                 let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
                 let checkCol = slicedDataOfSubmarine[0].x;
-                if (slicedDataOfSubmarine.filter(item=>item.isPushed).length === 0 && slicedDataOfSubmarine.filter(item=>item.x !== checkCol).length === 0) {
-                   if(position === 'vertic') slicedDataOfSubmarine.sort((a,b)=>{
-                    if (a.y < b.y) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                })
+                if (slicedDataOfSubmarine.filter(item => item.isPushed).length === 0 && slicedDataOfSubmarine.filter(item => item.x !== checkCol).length === 0 && !slicedDataOfSubmarine.some(item => !item.r)) {
+                    if (position === 'vertic') slicedDataOfSubmarine.sort((a, b) => {
+                        if (a.y < b.y) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
+                    })
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
                         if (arr.length > 1) {
                             switch (i) {
@@ -83,61 +116,64 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                         } else {
                             item.ImgSubmarine = 'one';
                         }
-    
+
                         item.isSubmarine = true;
-                        item.isSubmarineFound = false; 
-                        item.position = position;   
-                        dataBoard.forEach((item,i)=>{
-                            if(randomSquare <= i  &&  i < (submarineSize + randomSquare)) {
+                        item.isSubmarineFound = false;
+                        item.position = position;
+                        dataBoard.forEach((item, i) => {
+                            if (randomSquare <= i && i < (submarineSize + randomSquare)) {
                                 item.isPushed = true
                             }
-                        }); 
+                        });
                         submarineDataSquare.push(item);
                     });
                 }
                 if (submarineDataSquare.length > 0) {
+                    console.log('ver')
                     submarines.push({ id: data[randomSquare].id + 'sub', position, size: submarineSize, data: submarineDataSquare });
                 }
             }
-        }else {
-         if (boardSize - submarineSize >= dataBoard[randomSquare].x) {
-            
-            let submarineDataSquare = [];
-            let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
-            if (slicedDataOfSubmarine.filter(item=>item.isPushed).length === 0) {
-                slicedDataOfSubmarine.forEach((item, i, arr) => {
-                    if (arr.length > 1) {
-                        switch (i) {
-                            case 0:
-                                item.ImgSubmarine = 'tail'
-                                break;
-                            case arr.length - 1:
-                                item.ImgSubmarine = 'head'
-                                break;
-                            default:
-                                item.ImgSubmarine = 'middle'
-                                break;
-                        }
-                    } else {
-                        item.ImgSubmarine = 'one';
-                    }
+        }
+        else {
+            if (boardSize - submarineSize >= dataBoard[randomSquare].x) {
 
-                    item.isSubmarine = true;
-                    item.isSubmarineFound = false; 
-                    item.position = position;   
-                    dataBoard.forEach((item,i)=>{
-                        if(randomSquare <= i  &&  i < (submarineSize + randomSquare)) {
-                            item.isPushed = true
+                let submarineDataSquare = [];
+                let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
+                if (slicedDataOfSubmarine.filter(item => item.isPushed).length === 0 && !slicedDataOfSubmarine.some(item => !item.r)) {
+                    slicedDataOfSubmarine.forEach((item, i, arr) => {
+                        if (arr.length > 1) {
+                            switch (i) {
+                                case 0:
+                                    item.ImgSubmarine = 'tail'
+                                    break;
+                                case arr.length - 1:
+                                    item.ImgSubmarine = 'head'
+                                    break;
+                                default:
+                                    item.ImgSubmarine = 'middle'
+                                    break;
+                            }
+                        } else {
+                            item.ImgSubmarine = 'one';
                         }
-                    }); 
-                    submarineDataSquare.push(item);
-                });
-            }
-            if (submarineDataSquare.length > 0) {
+
+                        item.isSubmarine = true;
+                        item.isSubmarineFound = false;
+                        item.position = position;
+                        dataBoard.forEach((item, i) => {
+                            if (randomSquare <= i && i < (submarineSize + randomSquare)) {
+                                item.isPushed = true
+                            }
+                        });
+                        submarineDataSquare.push(item);
+                    });
+                }
+                if (submarineDataSquare.length > 0) {
+                    console.log('hor')
                     submarines.push({ id: data[randomSquare].id + 'sub', position, size: submarineSize, data: submarineDataSquare });
+                }
             }
         }
-    }
     }
     return submarines;
 }
@@ -150,7 +186,7 @@ function totalSubmarinesFun(submarines) {
     return totalSubmarines;
 }
 
-function getResults(submarines, level , action) {
+function getResults(submarines, level, action) {
     let results = [];
 
     for (let i = 0; i < level; i++) {
@@ -162,14 +198,13 @@ function getResults(submarines, level , action) {
             result.count = resultsBySize.length;
             result.found = 0;
             result.size = i;
-            if(action){
-                    result.data.forEach((itm)=>{
-                        if(itm.data.some(it=>!it.isSubmarineFound)){
-                        }else 
-                        {
-                            result.found = result.found +1
-                        }
-                    })
+            if (action) {
+                result.data.forEach((itm) => {
+                    if (itm.data.some(it => !it.isSubmarineFound)) {
+                    } else {
+                        result.found = result.found + 1
+                    }
+                })
             }
 
             if (result.count !== 0) {
@@ -196,7 +231,7 @@ function gameReducer(state, action) {
 
             return {
                 ...state,
-            }  
+            }
         case 'START':
 
             return {
@@ -205,10 +240,10 @@ function gameReducer(state, action) {
             }
 
         case 'RESULTS':
-            
+
             return {
                 ...state,
-                resultsData: getResults(state.submarines, state.level , action.payload)
+                resultsData: getResults(state.submarines, state.level, action.payload)
             }
 
         default:

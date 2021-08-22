@@ -67,7 +67,7 @@ function BoradGame() {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
                     <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={(e) => findSubmarines(e, item)}
-                    data-id={item.id} className="gameKey" style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
+                    data-id={item.id} className={!item.r ? "gameKey rhombus":"gameKey"} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : null} </button>
                     </React.Fragment>)

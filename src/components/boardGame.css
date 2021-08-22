@@ -4,8 +4,8 @@
     top: 50%;
     transform: translate(-50%, -50%);
     /* width: 100%;
-    max-width: 480px;
-    height: 480px; */
+    max-width: 480px; */
+    /* height: 480px; */
     display: flex;
     flex-wrap: wrap;
     animation: fadeInBoard 3s forwards;
@@ -60,7 +60,6 @@ button.gameKey {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 0;
-    /* max-height: 32px; */
 }
 
 button.gameKey:hover {
@@ -115,7 +114,12 @@ button.gameKey:focus {
     flex-direction: column;
     justify-content: space-between;
 }
-
+button.gameKey.rhombus{
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    box-shadow: none;
+    cursor: not-allowed;
+}
 button.gameKey img.vertic {
     position: absolute;
     z-index: 1;
