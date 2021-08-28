@@ -1,48 +1,75 @@
 
 const abc = [];
 
-function generateData(cols, rows) {
+function generateData(cols, rows,shape) {
     const boardData = [];
+    const isRhombus = shape === 'rhombus' ? true : false;
+    console.log(shape)
+    const isColsEven = (cols % 2) ? false : true ;
+    const isRowsEven = (rows % 2) ? false : true ;
 
-    const colsDiv = Math.floor(cols / 2);
-    const rowsDiv = Math.floor(rows / 2);
-    const colsRowsAvg = colsDiv / rowsDiv;
-    console.log(rowsDiv, colsDiv, colsRowsAvg)
     let counterForRhombus = 0;
+    const skippingSquare = cols-rows > 0 ? cols/rows: rows/cols;
+    let createRhombusBoard = (u,i) =>{
+        console.log(u,'u')
+        let isSquareRhombusCols;
+        let isSquareRhombusRows;
+        if(isColsEven) {
+            isSquareRhombusCols =  ((cols/2) === i || (cols/2)-1 === i)
+        }else {
+            isSquareRhombusCols = (Math.floor((cols/2)) === i)
+        }
+
+        if(isRowsEven) {
+            isSquareRhombusRows =  ((rows/2) === u || (rows/2)-1 === u)
+        }else {
+            isSquareRhombusRows = (Math.floor((rows/2)) === u)
+        }
+
+
+
+        const rhombusFun = () =>{
+            console.log(u)
+            if(Math.floor((cols/2)) >= i){
+            if(isColsEven && isRowsEven){
+                if( (Math.floor((rows/2)) - Math.round(i*skippingSquare) -1 <= u && Math.floor((rows/2)) + Math.round(i*skippingSquare) >= u)) {
+                    return true
+                }
+            }else if(isRowsEven){
+                if( (Math.floor((rows/2)) - Math.round(i*skippingSquare) -1 <= u && Math.floor((rows/2)) + Math.round(i*skippingSquare) >= u)) {
+                    return true
+                }
+            }else {
+                if( (Math.floor((rows/2)) - i*skippingSquare  <= u && Math.floor((rows/2)) + i*skippingSquare >= u)) {
+                    return true
+                }
+            }
+        }
+        else {
+            if(isColsEven){
+                if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare)  <= u && rows - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
+                    return true
+                }
+            }else if(cols/rows ===1){
+                if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare)  < u && rows-1 - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
+                    return true
+                }
+        }else {
+            if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare) +Math.ceil(skippingSquare)  < u && rows - Math.ceil(skippingSquare+1) - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
+                return true
+            }
+        }
+        }
+        }
+
+        return isSquareRhombusCols || isSquareRhombusRows || rhombusFun()
+        }
+ 
     for (let i = 0; i < cols; i++) {
         abc.push((i + 10).toString(36).toUpperCase());
-        if (colsRowsAvg > 1) {
-            if (colsDiv >= i && i !== 0 && i % 2 === 0) {
-                counterForRhombus++;
-
-            } else if (colsDiv < i && i % 2 !== 0) {
-                counterForRhombus++;
-            }
-        } else if (colsRowsAvg < 1) {
-            if (colsDiv >= i && i !== 0) {
-                counterForRhombus = counterForRhombus +2;
-
-            } else if (colsDiv <= i ) {
-                counterForRhombus = counterForRhombus +2;
-            }
-        } else if (colsRowsAvg === 1) {
-            counterForRhombus = i;
-        }
         for (let u = 0; u < rows; u++) {
-            if (colsRowsAvg < 1) {
-                if ( (rowsDiv -counterForRhombus > u ) || (rowsDiv + counterForRhombus < u ) || ((colsDiv < i) && u < counterForRhombus - rowsDiv) || ((colsDiv < i) && u >= (rows - (counterForRhombus - rowsDiv)))) {
-                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: false })
-                } else {
-                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: true })
-                }
-            } else {
-                if ((rowsDiv - counterForRhombus > u) || (rowsDiv + counterForRhombus < u) || ((colsDiv < i) && u < counterForRhombus - rowsDiv) || ((colsDiv < i) && u >= (rows - (counterForRhombus - rowsDiv)))) {
-                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: false })
-                } else {
-                    boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: true })
-                }
-            }
-        }
+            boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: isRhombus ? createRhombusBoard(u, i) : true })
+        }        
     }
     return boardData;
 }
@@ -223,8 +250,9 @@ function gameReducer(state, action) {
             state.level = (+action.payload.difficolty);
             state.rows = (+action.payload.rows);
             state.cols = (+action.payload.columns);
+            state.shape = action.payload.shape;
             state.numberOfShips = (+action.payload.ships);
-            state.boardData = generateData(state.rows, state.cols);
+            state.boardData = generateData(state.rows, state.cols, state.shape);
             state.submarines = generateSubmarines(state.numberOfShips, state.level, state.boardData, state.cols);
             state.totalSubmarines = totalSubmarinesFun(state.submarines);
             state.resultsData = getResults(state.submarines, state.level);

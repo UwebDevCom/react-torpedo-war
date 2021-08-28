@@ -64,6 +64,11 @@ form .form-group {
   margin: 10px 0;
   position: relative;
 }
+
+form .selectShape
+{
+  color: #fff;
+}
 form .form-group label {
   display: block;
   color: black;

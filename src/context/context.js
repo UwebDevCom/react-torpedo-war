@@ -8,6 +8,7 @@ const initialState = {
     level: null,
     rows: null,
     cols: null,
+    shape: null,
     totalSubmarines: 0,
     resultsData: null
 }
@@ -21,6 +22,7 @@ const GameContext = createContext({
     level: initialState.level,
     rows: initialState.rows,
     cols: initialState.cols,
+    shape: initialState.shape,
     startNewGameFun: (value) => { },
     resultsData: initialState.resultsData,
     resultsDataFun: (value) => { },

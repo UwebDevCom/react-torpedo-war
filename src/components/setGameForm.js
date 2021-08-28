@@ -74,8 +74,12 @@ function SetGameForm(props) {
            </div>
            <div className="form-group">
            <label>Ships: </label>
-           <input name="ships" onChange={handleChangeOnInputs} type="number" />
-          
+           <input name="ships" onChange={handleChangeOnInputs} type="number" />         
+           </div>
+           <div className="selectShape">
+           <label>Shape: </label>
+           rect: <input name="shape" value="rect" onChange={handleChangeOnInputs} type="radio" />         
+           rhombus: <input name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" />         
            </div>
            {curretError ? <p className="errorsMessage">difficolty and ships count cannot be more than half of the board</p> : <p className="noErrors"></p>}
           {curretError 
