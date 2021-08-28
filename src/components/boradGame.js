@@ -30,7 +30,6 @@ function BoradGame() {
         const squareWidth = document.querySelector('.gameKey').getBoundingClientRect().width;
         if(squareWidth > 0) {
             setWidthSquareSize(squareWidth);
-                console.log(widthSquareSize)
         }    
     },[count,widthSquareSize])
 
@@ -56,7 +55,7 @@ function BoradGame() {
     return (
         <>
         {!isFinished ?
-        <div className="board-container" style={{maxWidth: cols < rows ? ((window.innerHeight/2)/rows) * cols+'px' : null }}>
+        <div className="board-container" style={{maxWidth: cols <= rows ? ((window.innerHeight/2)/rows) * cols+'px' : null }}>
             <div className="left"></div>
             <div className="right"></div>
             <div className="top"></div>

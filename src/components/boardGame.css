@@ -20,7 +20,7 @@
     background-size: cover;
     background-image: url('../assets/metal-border-hor.png');
 }
-.board-container .right{
+.board-container .right {
     position: absolute;
     right: -20px;
     top: 0;
