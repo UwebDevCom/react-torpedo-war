@@ -1,75 +1,59 @@
 
 const abc = [];
 
-function generateData(cols, rows,shape) {
+function generateData(cols, rows, shape) {
+
     const boardData = [];
     const isRhombus = shape === 'rhombus' ? true : false;
-    console.log(shape)
-    const isColsEven = (cols % 2) ? false : true ;
-    const isRowsEven = (rows % 2) ? false : true ;
 
-    let counterForRhombus = 0;
-    const skippingSquare = cols-rows > 0 ? cols/rows: rows/cols;
-    let createRhombusBoard = (u,i) =>{
-        console.log(u,'u')
-        let isSquareRhombusCols;
-        let isSquareRhombusRows;
-        if(isColsEven) {
-            isSquareRhombusCols =  ((cols/2) === i || (cols/2)-1 === i)
-        }else {
-            isSquareRhombusCols = (Math.floor((cols/2)) === i)
+
+
+    let createRhombusBoard = (u, i) => {
+
+        const skippingSquare = cols - rows > 0 ? cols / rows : rows / cols;
+
+        const middleCols = cols  % 2 > 0 ? [Math.floor(cols / 2)] : [cols / 2, cols / 2 - 1];
+        const middleRows = rows  % 2 > 0 ? [Math.floor(rows / 2)] : [rows / 2, rows / 2 - 1];
+       
+
+        if (middleCols.includes(i)) {
+            return true
         }
 
-        if(isRowsEven) {
-            isSquareRhombusRows =  ((rows/2) === u || (rows/2)-1 === u)
-        }else {
-            isSquareRhombusRows = (Math.floor((rows/2)) === u)
+        if (middleRows.includes(u)) {
+
+            return true
+        }
+        if(rows <= 4 || cols <=4 ){
+            return false
         }
 
-
-
-        const rhombusFun = () =>{
-            console.log(u)
-            if(Math.floor((cols/2)) >= i){
-            if(isColsEven && isRowsEven){
-                if( (Math.floor((rows/2)) - Math.round(i*skippingSquare) -1 <= u && Math.floor((rows/2)) + Math.round(i*skippingSquare) >= u)) {
-                    return true
+        const rhombusFun = () => {
+            if (rows >= cols) {
+                if (i < Math.floor(cols / 2) && (Math.ceil((rows / 2)- 1)  - Math.round(i * skippingSquare) <= u  && Math.floor((rows / 2)) + Math.round(i * skippingSquare) >= u)) {
+                    return true;
                 }
-            }else if(isRowsEven){
-                if( (Math.floor((rows/2)) - Math.round(i*skippingSquare) -1 <= u && Math.floor((rows/2)) + Math.round(i*skippingSquare) >= u)) {
-                    return true
+                if (i > Math.floor(cols / 2) && Math.ceil((rows / 2)- 1) - Math.round((cols-1-i) * skippingSquare) <= u && Math.floor((rows / 2)) + Math.round((cols-1-i) * skippingSquare) >= u) {
+                    console.log(Math.round((cols-i-1) * skippingSquare),i)
+                    return true;
                 }
             }else {
-                if( (Math.floor((rows/2)) - i*skippingSquare  <= u && Math.floor((rows/2)) + i*skippingSquare >= u)) {
-                    return true
+                if (i < Math.floor(rows / 2) && (Math.ceil((cols / 2)- 1)  - Math.round(u * skippingSquare) <= i  && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
+                    return true;
+                }
+                if (i > Math.floor(rows / 2) && Math.ceil((cols / 2)- 1) - Math.round((rows-1-u) * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round((rows-1-u) * skippingSquare) >= i) {
+                    return true;
                 }
             }
         }
-        else {
-            if(isColsEven){
-                if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare)  <= u && rows - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
-                    return true
-                }
-            }else if(cols/rows ===1){
-                if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare)  < u && rows-1 - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
-                    return true
-                }
-        }else {
-            if ( Math.round((i - Math.ceil((cols/2)))* skippingSquare) +Math.ceil(skippingSquare)  < u && rows - Math.ceil(skippingSquare+1) - Math.round((i - Math.ceil((cols/2)))* skippingSquare)  > u ){
-                return true
-            }
-        }
-        }
-        }
+        return rhombusFun();
+    }
 
-        return isSquareRhombusCols || isSquareRhombusRows || rhombusFun()
-        }
- 
     for (let i = 0; i < cols; i++) {
         abc.push((i + 10).toString(36).toUpperCase());
         for (let u = 0; u < rows; u++) {
             boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: isRhombus ? createRhombusBoard(u, i) : true })
-        }        
+        }
     }
     return boardData;
 }
@@ -156,7 +140,6 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                     });
                 }
                 if (submarineDataSquare.length > 0) {
-                    console.log('ver')
                     submarines.push({ id: data[randomSquare].id + 'sub', position, size: submarineSize, data: submarineDataSquare });
                 }
             }
@@ -196,7 +179,6 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                     });
                 }
                 if (submarineDataSquare.length > 0) {
-                    console.log('hor')
                     submarines.push({ id: data[randomSquare].id + 'sub', position, size: submarineSize, data: submarineDataSquare });
                 }
             }
