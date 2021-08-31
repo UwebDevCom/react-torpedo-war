@@ -34,14 +34,14 @@ function generateData(cols, rows, shape) {
                     return true;
                 }
                 if (i > Math.floor(cols / 2) && Math.ceil((rows / 2)- 1) - Math.round((cols-1-i) * skippingSquare) <= u && Math.floor((rows / 2)) + Math.round((cols-1-i) * skippingSquare) >= u) {
-                    console.log(Math.round((cols-i-1) * skippingSquare),i)
                     return true;
                 }
             }else {
-                if (i < Math.floor(rows / 2) && (Math.ceil((cols / 2)- 1)  - Math.round(u * skippingSquare) <= i  && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
+                console.log(rows,cols , rows-1-u)
+                if (u < Math.floor(rows / 2) && (Math.ceil((cols / 2)- 1)  - Math.round(u * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
                     return true;
                 }
-                if (i > Math.floor(rows / 2) && Math.ceil((cols / 2)- 1) - Math.round((rows-1-u) * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round((rows-1-u) * skippingSquare) >= i) {
+                if (u > Math.floor(rows / 2) && Math.ceil((cols / 2)- 1) - Math.round((rows-1-u) * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round((rows-1-u) * skippingSquare) >= i) {
                     return true;
                 }
             }
