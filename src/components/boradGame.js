@@ -10,6 +10,7 @@ function BoradGame() {
     const [isFinished, setGameStatus] = useState(false);
     
     const findSubmarines = (e,item) => {
+        if(item.r){
         if (e.currentTarget.classList.contains("clicked")){
             return null
         }
@@ -21,6 +22,7 @@ function BoradGame() {
             e.currentTarget.classList.add('isSub');
         }
         resultsDataFun(item);
+    }
     }
     
     useEffect(()=>{

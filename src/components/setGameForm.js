@@ -10,7 +10,7 @@ const formReducer = (state, event) => {
 
 function SetGameForm(props) {
     const limitedSize = 20;
-    const {setNewGameData ,startNewGameFun} = useContext(GameContext);
+    const {setNewGameData ,startNewGameFun, totalSubmarines} = useContext(GameContext);
 
     const [formData, setFormData] = useReducer(formReducer, {});
     const [curretError, setErrors] = useState(true);
@@ -21,11 +21,11 @@ function SetGameForm(props) {
     useEffect(() => {
       if(playNow)
       startNewGameFun(playNow);      
-
-  },[playNow ,curretError])
+  },[playNow ,curretError, totalSubmarines])
 
     const handleSubmit = (event) => {
       event.preventDefault();
+
       if((formData.rows*formData.columns/2) > formData.difficolty*formData.ships) {
         setErrors(false);       
         buildGameData(false);

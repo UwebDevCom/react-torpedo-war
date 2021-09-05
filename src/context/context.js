@@ -33,7 +33,7 @@ const GameContext = createContext({
 function GameProvider(props) {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
-    function setNewGameData(value) {
+    function setNewGameData(value,submarinesLimit) {
         dispatch({
             type: 'SET',
             payload: value
