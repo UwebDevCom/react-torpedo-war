@@ -34,6 +34,7 @@ function GameProvider(props) {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
     function setNewGameData(value,submarinesLimit) {
+        console.log(state.totalSubmarines, submarinesLimit)
         dispatch({
             type: 'SET',
             payload: value

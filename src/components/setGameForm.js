@@ -20,13 +20,16 @@ function SetGameForm(props) {
 
     useEffect(() => {
       if(playNow)
-      startNewGameFun(playNow);      
+      startNewGameFun(playNow);     
+      if(formData.rows*formData.columns/2 < totalSubmarines ){
+        setErrors(true); 
+      } 
   },[playNow ,curretError, totalSubmarines])
 
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      if((formData.rows*formData.columns/2) > formData.difficolty*formData.ships) {
+      if((formData.rows*formData.columns/2) > totalSubmarines && formData.rows*formData.columns > formData.difficolty*formData.ships) {
         setErrors(false);       
         buildGameData(false);
       }
@@ -36,7 +39,6 @@ function SetGameForm(props) {
         setTimeout(()=>{
           event.target.querySelector('.errorsMessage').classList.remove('errorsMessageBlink');
         },1000)
-
       }
     }
     const buildGameData = (bol)=>{
