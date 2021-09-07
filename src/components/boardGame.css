@@ -219,9 +219,9 @@ button.gameKey .horiz{
 
 @media screen and (max-width:960px) {
     .board-container {
-        left: 0;
-        transform: translate(0, -50%);
-        margin: 30px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
     }
     .showResultsBtn{
       left: 50% !important;

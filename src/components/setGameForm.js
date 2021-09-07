@@ -12,6 +12,7 @@ function SetGameForm(props) {
     const limitedSize = 20;
     const {setNewGameData ,startNewGameFun, totalSubmarines} = useContext(GameContext);
 
+
     const [formData, setFormData] = useReducer(formReducer, {});
     const [curretError, setErrors] = useState(true);
     

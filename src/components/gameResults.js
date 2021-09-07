@@ -3,15 +3,17 @@ import './gameResults.css';
 import ImageOfSubmarine from './imageOfSubmarine';
 import { GameContext } from '../context/context';
 
-function GameResults() {
+function GameResults({isShow}) {
     
     const {resultsData} = useContext(GameContext);
-    const [isShow, toggleResults] = useState(false);
+   
 
     return (
-        <div className="gameResultsWrapper">
-            <button className="showResultsBtn" onClick={()=>toggleResults(!isShow)} >RESULTS</button>
-        <div className={isShow ? "gameResultsContainer show" : "gameResultsContainer"}>
+        <>
+       {isShow ? <div className="gameResultsWrapper">
+            {/* <button className="showResultsBtn" onClick={()=>toggleResults(!isShow)} >RESULTS</button> */}
+                <span className="gameResultsContainerTitle">RESULTS STATUS</span>
+         <div className={ "gameResultsContainer"}>
             <ul>
             {resultsData.map((item, i)=>{
                return (
@@ -37,7 +39,10 @@ function GameResults() {
         }
             </ul>
         </div>
+ 
         </div>
+        : null}
+        </>
     )
 }
 

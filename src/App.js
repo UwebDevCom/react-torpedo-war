@@ -4,17 +4,20 @@ import StartTheGame from './components/startTheGame';
 import GameResults from './components/gameResults';
 import BoradGame from './components/boradGame';
 import { GameContext } from './context/context';
-
+import HeaderMenu from './components/headerMenu';
 function App() {
 
   const { startNewGame } = useContext(GameContext);
-
+  const [isShow, toggleResults] = useState(false);
+  
   useEffect(() => {
-  }, [startNewGame])
+  console.log('isShow',isShow)
+  }, [startNewGame,isShow])
 
   return (
     <div className="App">
       <header className="App-header">
+      {startNewGame ?  <HeaderMenu toggleResults={toggleResults} isShow={isShow} /> : null}
       </header>
       <main>
         <section className="splashScreenContainer">
@@ -22,7 +25,7 @@ function App() {
           {startNewGame ?
 
             (<>
-              <GameResults />
+              <GameResults isShow={isShow} />
               <BoradGame />
             </>
             ) : ''

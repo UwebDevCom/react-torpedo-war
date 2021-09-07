@@ -19,7 +19,32 @@ div.startingNow{
  background-image: url('./assets/torpedo-battle-bg.png');
   background-size: cover;
 }
-
+.menuHeader .logo img{
+  width: 80px;
+}
+.menuHeader ul {
+  list-style: none;
+}
+.menuHeader ul li button {
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,0,0,1);
+  background-position: center center;
+  background-size: 100%;
+  background-color: rgba(0,0,0,0.5);
+  padding: 4px 20px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+.menuHeader
+{
+  display: flex;
+  width: 100%;
+  padding: 0 22px;
+  background-image: url('./assets/metal-border.png');
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
 
 @keyframes fadeIn {
   0% {opacity:0;}
