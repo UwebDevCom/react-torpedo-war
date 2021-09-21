@@ -52,7 +52,7 @@ function generateData(cols, rows, shape) {
     for (let i = 0; i < cols; i++) {
         abc.push((i + 10).toString(36).toUpperCase());
         for (let u = 0; u < rows; u++) {
-            boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: isRhombus ? createRhombusBoard(u, i) : true })
+            boardData.push({ id: u + '-' + abc[i], x: u, y: abc[i], dirty: false, isPushed: false, r: isRhombus ? createRhombusBoard(u, i) : true, islnd: false })
         }
     }
     return boardData;
@@ -112,21 +112,7 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                         }
                     })
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
-                        if (arr.length > 1) {
-                            switch (i) {
-                                case 0:
-                                    item.ImgSubmarine = 'tail'
-                                    break;
-                                case arr.length - 1:
-                                    item.ImgSubmarine = 'head'
-                                    break;
-                                default:
-                                    item.ImgSubmarine = 'middle'
-                                    break;
-                            }
-                        } else {
-                            item.ImgSubmarine = 'one';
-                        }
+                        generageImgSub(arr,item,i);
 
                         item.isSubmarine = true;
                         item.isSubmarineFound = false;
@@ -150,22 +136,9 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                 let submarineDataSquare = [];
                 let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
                 if (slicedDataOfSubmarine.filter(item => item.isPushed).length === 0 && !slicedDataOfSubmarine.some(item => !item.r)) {
+                   console.log('slicedDataOfSubmarine',slicedDataOfSubmarine);
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
-                        if (arr.length > 1) {
-                            switch (i) {
-                                case 0:
-                                    item.ImgSubmarine = 'tail'
-                                    break;
-                                case arr.length - 1:
-                                    item.ImgSubmarine = 'head'
-                                    break;
-                                default:
-                                    item.ImgSubmarine = 'middle'
-                                    break;
-                            }
-                        } else {
-                            item.ImgSubmarine = 'one';
-                        }
+                        generageImgSub(arr,item,i);
 
                         item.isSubmarine = true;
                         item.isSubmarineFound = false;
@@ -225,8 +198,44 @@ function getResults(submarines, level, action) {
     return results;
 }
 
+function generageImgSub(arr , item , i){
+    if (arr.length > 1) {
+        switch (i) {
+            case 0:
+                item.ImgSubmarine = 'tail'
+                break;
+            case arr.length - 1:
+                item.ImgSubmarine = 'head'
+                break;
+            default:
+                item.ImgSubmarine = 'middle'
+                break;
+        }
+    } else {
+        item.ImgSubmarine = 'one';
+    }
+}
+
+function createIslands(amountOfIsland , boardData,shouldBeIslands){
+    if (shouldBeIslands){
+        const totalSquaresForIslands = Math.ceil((amountOfIsland/100) *boardData.map(item=>item.r).length);
+        return generateIslands(totalSquaresForIslands , boardData);
+    }
+}
+function generateIslands(totalSquaresForIslands,boardData){
+    let islandsLocations = [];
+    while (totalSquaresForIslands > islandsLocations.length) {
+        let randomIslandLocation = Math.round(Math.random()*boardData.length);
+        if(!boardData[randomIslandLocation].isPushed && boardData[randomIslandLocation].r){
+            boardData[randomIslandLocation].islnd = true;
+            islandsLocations.push(boardData[randomIslandLocation])
+        }
+    }
+    return islandsLocations
+}
 
 function gameReducer(state, action) {
+
     switch (action.type) {
         case 'SET':
             state.level = (+action.payload.difficolty);
@@ -238,7 +247,7 @@ function gameReducer(state, action) {
             state.submarines = generateSubmarines(state.numberOfShips, state.level, state.boardData, state.cols);
             state.totalSubmarines = totalSubmarinesFun(state.submarines);
             state.resultsData = getResults(state.submarines, state.level);
-
+            state.islands = createIslands(10,state.boardData, action.payload.islands);
             return {
                 ...state,
             }

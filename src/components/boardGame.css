@@ -205,6 +205,16 @@ button.gameKey .horiz{
     transition: all .3s;
 }
 
+button.finishGameSquate
+{
+border: none;
+box-shadow: none;
+background-color: rgba(0,183,255,0.8);
+transition: all .3s;
+}
+button.finishGameSquate img {
+ display: none;   
+}
 @keyframes fadeInBoard {
     0% {
         opacity: 0;

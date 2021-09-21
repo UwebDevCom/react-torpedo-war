@@ -18,11 +18,12 @@ function SetGameForm(props) {
     
     const [playNow, setTheGame] = useState(false);
     const [spinner, setSpinner] = useState(false);
+    const [checkboxValue,setCheckboxValue] = useState(false);
 
     useEffect(() => {
       if(playNow)
-      startNewGameFun(playNow);     
-      if(formData.rows*formData.columns/2 < totalSubmarines ){
+      startNewGameFun(playNow);    
+      if(formData.rows*formData.columns/2 < totalSubmarines){
         setErrors(true); 
       } 
   },[playNow ,curretError, totalSubmarines])
@@ -30,7 +31,7 @@ function SetGameForm(props) {
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      if((formData.rows*formData.columns/2) > totalSubmarines && formData.rows*formData.columns > formData.difficolty*formData.ships) {
+      if((formData.rows*formData.columns/2) > totalSubmarines && formData.rows*formData.columns > formData.difficolty*formData.ships && formData.difficolty > 0 && formData.ships > 0) {
         setErrors(false);       
         buildGameData(false);
       }
@@ -54,6 +55,13 @@ function SetGameForm(props) {
     }
 
     const handleChangeOnInputs = event => {
+      if (event.target.name === 'islands'){
+        setCheckboxValue(!checkboxValue);
+        setFormData({
+          name: event.target.name,
+          value: checkboxValue,
+        });
+      }
       setFormData({
         name: event.target.name,
         value: event.target.value,
@@ -89,6 +97,10 @@ function SetGameForm(props) {
            <input name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" required />
            <div className="markupTwo"></div>
            </label>         
+           </div>
+           <div className="form-group-checkbox">
+           <input name="islands" type="checkbox" checked={checkboxValue} onChange={handleChangeOnInputs}  />
+           <label>Adding isleands </label>
            </div>
            {curretError ? <p className="errorsMessage">difficolty and ships count cannot be more than half of the board</p> : <p className="noErrors"></p>}
           {curretError 

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { GameContext } from '../context/context';
 import './boardGame.css';
 import ImageOfSubmarine from './imageOfSubmarine';
+import ImageOfIsland from './imageOfIsland';
 
 function BoradGame() {
     const { boardData ,totalSubmarines , resultsDataFun ,cols, rows} = useContext(GameContext);
@@ -53,10 +54,20 @@ function BoradGame() {
             </>
         )
     }
-
+    const cantClickOnIsland = (e) =>{
+        e.target.style.position = 'relative'
+        let moveMotion = 30;
+        const shakeIsland = setInterval(() => {
+            moveMotion--;        
+             e.target.style.transform = `translate(${moveMotion*(moveMotion%2 >0 ? -1: 1)}px)`;       
+        if (moveMotion === 0) {
+            clearInterval(shakeIsland)
+        }
+        });
+    }
     return (
         <>
-        {!isFinished ?
+        
         <div className="board-container" style={{maxWidth: cols <= rows ? ((window.innerHeight/2)/rows) * cols+'px' : null }}>
             <div className="left"></div>
             <div className="right"></div>
@@ -67,13 +78,14 @@ function BoradGame() {
             {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
-                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={(e) => findSubmarines(e, item)}
-                    data-id={item.id} className={!item.r ? "gameKey rhombus":"gameKey"} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
+                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e) :  (e) => findSubmarines(e, item)}
+                    data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey"} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
-                    {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : null} </button>
+                    {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : item.islnd ? <ImageOfIsland />: null} </button>
                     </React.Fragment>)
             }
-        </div> : <div className="finishGame"><span>You Win</span><button onClick={()=>window.location.reload()}>Again</button></div>}
+        </div> 
+        {isFinished ? <div className="finishGame"><span>You Win</span><button onClick={()=>window.location.reload()}>Again</button></div> : null}
         </>
     )
 }

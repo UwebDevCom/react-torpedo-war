@@ -10,7 +10,6 @@ import tailVertic from '../assets/tail-vertic.svg';
 import oneVertic from '../assets/one-vertic.svg';
 
  function ImageOfSubmarine({data: {ImgSubmarine ,position}}) {
-    // <img className={position === 'horiz' ? 'horiz' :'vertic' } src={ImgSubmarine === 'middle' ? middle : ImgSubmarine ==='head' ? head : ImgSubmarine ==='tail' ? tail : one }  alt={ImgSubmarine}/>
 
     const buildImageOfShip = (position) =>{
             if(position=== 'horiz'){

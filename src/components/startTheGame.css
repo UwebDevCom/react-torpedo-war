@@ -13,7 +13,7 @@
   border-radius: 20px;
   width: 100%;
   max-width: 560px;
-  height: 500px;
+  height: 530px;
 }
 .gameStartContainer.moveTop {
   animation: popupStart 2s forwards;
@@ -58,11 +58,23 @@ form{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 48px;
+  bottom: 40px;
 }
 form .form-group {
   margin: 10px 0;
   position: relative;
+}
+form .form-group-checkbox
+{
+  margin: 10px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+form .form-group-checkbox label
+{
+  color: #fff;
 }
 
 form .selectShape
@@ -188,7 +200,7 @@ p.noErrors
   background-position: center;
   background-color: transparent;
   border: none;
-  width: 160px;
+  width: 172px;
   height: 60px;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
@@ -203,6 +215,7 @@ p.noErrors
   }
   100% {
     top: 150%;
+    visibility: hidden;
   }
 }
 
