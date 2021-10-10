@@ -37,7 +37,6 @@ function generateData(cols, rows, shape) {
                     return true;
                 }
             }else {
-                console.log(rows,cols , rows-1-u)
                 if (u < Math.floor(rows / 2) && (Math.ceil((cols / 2)- 1)  - Math.round(u * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
                     return true;
                 }
@@ -136,7 +135,6 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                 let submarineDataSquare = [];
                 let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
                 if (slicedDataOfSubmarine.filter(item => item.isPushed).length === 0 && !slicedDataOfSubmarine.some(item => !item.r)) {
-                   console.log('slicedDataOfSubmarine',slicedDataOfSubmarine);
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
                         generageImgSub(arr,item,i);
 
@@ -234,6 +232,33 @@ function generateIslands(totalSquaresForIslands,boardData){
     return islandsLocations
 }
 
+
+function fireSquareByForm(boardData , dataForm) {
+    
+    let squareHasFired = false;
+    const showFireResults = document.querySelector('.showShotCordinates');
+    
+    boardData.map(squareData=>{
+        if(squareData.x === dataForm.xAxis && squareData.y === dataForm.yAxis && squareData.r){
+            squareData.isSubmarineFound  = true;
+            squareHasFired = true;
+        }
+    });
+    
+    if (squareHasFired)
+    {showFireResults.style.display = "block";
+    setTimeout(()=>{
+        showFireResults.style.display = "none";
+    },1000);
+    return boardData}
+    else 
+    alert('No matchs on board');
+    
+    return boardData
+
+} 
+
+
 function gameReducer(state, action) {
 
     switch (action.type) {
@@ -264,6 +289,15 @@ function gameReducer(state, action) {
                 ...state,
                 resultsData: getResults(state.submarines, state.level, action.payload)
             }
+
+            case 'FIRE':
+                
+                return {
+                    ...state,
+                    boardData: fireSquareByForm(state.boardData, action.payload),
+                    resultsData: getResults(state.submarines, state.level, action.payload)
+
+                }
 
         default:
             return state

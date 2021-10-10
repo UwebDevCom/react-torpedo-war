@@ -8,12 +8,21 @@ const formReducer = (state, event) => {
     }
    }
 
+   const initialState = {
+    columns: "8",
+    difficolty: "4",
+    islands: "on",
+    rows: "8",
+    shape: "rect",
+    ships: "8"
+  };
+
 function SetGameForm(props) {
     const limitedSize = 20;
     const {setNewGameData ,startNewGameFun, totalSubmarines} = useContext(GameContext);
 
 
-    const [formData, setFormData] = useReducer(formReducer, {});
+    const [formData, setFormData] = useReducer(formReducer, initialState);
     const [curretError, setErrors] = useState(true);
     
     const [playNow, setTheGame] = useState(false);
@@ -21,6 +30,7 @@ function SetGameForm(props) {
     const [checkboxValue,setCheckboxValue] = useState(false);
 
     useEffect(() => {
+      console.log(formData)
       if(playNow)
       startNewGameFun(playNow);    
       if(formData.rows*formData.columns/2 < totalSubmarines){
@@ -73,34 +83,34 @@ function SetGameForm(props) {
         <form onSubmit={handleSubmit}>
            <div className="form-group">
            <label>Rows:</label>
-           <input name="rows" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
+           <input disabled={!curretError} value={formData.columns} name="rows" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
            </div>
            <div className="form-group">
            <label>Columns:</label>
-           <input name="columns"  onChange={handleChangeOnInputs} type="number" max={limitedSize} />
+           <input disabled={!curretError} value={formData.rows} name="columns"  onChange={handleChangeOnInputs} type="number" max={limitedSize} />
            </div>
            <div className="form-group">
            <label>Difficolty: </label>
-           <input name="difficolty" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
+           <input disabled={!curretError} value={formData.difficolty} name="difficolty" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
            </div>
            <div className="form-group">
            <label>Ships: </label>
-           <input name="ships" onChange={handleChangeOnInputs} type="number" />         
+           <input disabled={!curretError} value={formData.ships} name="ships" onChange={handleChangeOnInputs} type="number" />         
            </div>
            <div className="selectShape">
              <span>Shape Board:</span>
           <label>
-          <input name="shape" value="rect" onChange={handleChangeOnInputs} type="radio"  required /> 
+          <input name="shape" value="rect" onChange={handleChangeOnInputs} type="radio" checked  required /> 
           <div className="markupOne"></div>
           </label>        
            <label>
-           <input name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" required />
+           <input disabled={!curretError} name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" required />
            <div className="markupTwo"></div>
            </label>         
            </div>
            <div className="form-group-checkbox">
-           <input name="islands" type="checkbox" checked={checkboxValue} onChange={handleChangeOnInputs}  />
-           <label>Adding isleands </label>
+           <input id="addIslands" disabled={!curretError} name="islands" type="checkbox" checked={checkboxValue} onChange={handleChangeOnInputs}  />
+           <label htmlFor="addIslands">Adding islands </label>
            </div>
            {curretError ? <p className="errorsMessage">difficolty and ships count cannot be more than half of the board</p> : <p className="noErrors"></p>}
           {curretError 

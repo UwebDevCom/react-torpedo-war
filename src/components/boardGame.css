@@ -8,6 +8,7 @@
     /* height: 480px; */
     display: flex;
     flex-wrap: wrap;
+    max-width: 480px;
     animation: fadeInBoard 3s forwards;
 }
 .board-container .left{
@@ -232,6 +233,7 @@ button.finishGameSquate img {
         left: 50%;
         transform: translate(-50%, -50%);
         margin: 0;
+        width: 80%;
     }
     .showResultsBtn{
       left: 50% !important;

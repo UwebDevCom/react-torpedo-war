@@ -5,6 +5,7 @@ import GameResults from './components/gameResults';
 import BoradGame from './components/boradGame';
 import { GameContext } from './context/context';
 import HeaderMenu from './components/headerMenu';
+import FindSquare from './components/findSquare';
 function App() {
 
   const { startNewGame } = useContext(GameContext);
@@ -27,6 +28,7 @@ function App() {
             (<>
               <GameResults isShow={isShow} />
               <BoradGame />
+              <FindSquare />
             </>
             ) : ''
           }

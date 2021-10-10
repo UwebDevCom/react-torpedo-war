@@ -54,7 +54,10 @@ function BoradGame() {
             </>
         )
     }
-    const cantClickOnIsland = (e) =>{
+    const cantClickOnIsland = (e,item) =>{
+        if (e.currentTarget.classList.contains("clicked")){
+            return null;
+        }else {
         e.target.style.position = 'relative'
         let moveMotion = 30;
         const shakeIsland = setInterval(() => {
@@ -64,7 +67,9 @@ function BoradGame() {
             clearInterval(shakeIsland)
         }
         });
+        findSubmarines(e,item);
     }
+}
     return (
         <>
         
@@ -78,8 +83,8 @@ function BoradGame() {
             {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
-                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e) :  (e) => findSubmarines(e, item)}
-                    data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey"} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
+                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
+                    data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey " +  (item.isSubmarineFound && item.isSubmarine  ? 'isSub' :  item.isSubmarineFound ? 'clicked' : null)} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : item.islnd ? <ImageOfIsland />: null} </button>
                     </React.Fragment>)

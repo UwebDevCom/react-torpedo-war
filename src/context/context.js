@@ -11,7 +11,8 @@ const initialState = {
     shape: null,
     islands: null,
     totalSubmarines: 0,
-    resultsData: null
+    resultsData: null,
+    fireSquareByForm: null
 }
 
 const GameContext = createContext({
@@ -28,6 +29,7 @@ const GameContext = createContext({
     startNewGameFun: (value) => { },
     resultsData: initialState.resultsData,
     resultsDataFun: (value) => { },
+    fireSquareByForm : (value) => { }
 });
 
 
@@ -36,7 +38,6 @@ function GameProvider(props) {
     const [state, dispatch] = useReducer(gameReducer, initialState);
 
     function setNewGameData(value,submarinesLimit) {
-        console.log(state.totalSubmarines, submarinesLimit)
         dispatch({
             type: 'SET',
             payload: value
@@ -50,6 +51,13 @@ function GameProvider(props) {
         });
     }
 
+    function fireSquareByForm(value) {
+        dispatch({
+            type: 'FIRE',
+            payload: value
+        });
+    }
+
     function resultsDataFun(value) {
         dispatch({
             type: 'RESULTS',
@@ -58,7 +66,7 @@ function GameProvider(props) {
     }
     return (
         <GameContext.Provider
-            value={{cols: state.cols, rows: state.rows, startNewGame: state.startNewGame, submarines: state.submarines, setNewGameData, startNewGameFun, resultsDataFun, resultsData: state.resultsData, boardData: state.boardData, totalSubmarines: state.totalSubmarines }} {...props} />
+            value={{cols: state.cols, rows: state.rows, startNewGame: state.startNewGame, submarines: state.submarines, setNewGameData, startNewGameFun, resultsDataFun,fireSquareByForm, resultsData: state.resultsData, boardData: state.boardData, totalSubmarines: state.totalSubmarines }} {...props} />
     )
 }
 

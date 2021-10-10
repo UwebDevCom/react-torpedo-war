@@ -3,7 +3,7 @@ import islandicon from '../assets/islandicon.svg';
 
 
 const buildImageOfIsland = () =>{
-    return (<img style={{padding: '10px'}} className='islandImg'
+    return (<img style={{padding: '15%'}} className='islandImg'
         src={ islandicon}  alt="island" />)
     }
 

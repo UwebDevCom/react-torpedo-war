@@ -16,6 +16,7 @@ function GameResults({isShow}) {
          <div className={ "gameResultsContainer"}>
             <ul>
             {resultsData.map((item, i)=>{
+                console.log(item)
                return (
                 <li key={i + 'isItemSub'}>
                     <div className="d-flex row-big">
