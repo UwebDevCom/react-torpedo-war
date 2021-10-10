@@ -1,0 +1,86 @@
+.findSquareContainer {
+  background-color: #00000050;
+  display: flex;
+  border-radius: 10px;
+  margin: 10px auto;
+  max-width: 150px;
+  /* padding: 5px; */
+  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.5) inset;
+}
+.squareTargetBtn {
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  display: block;
+  border-radius: 10px;
+  background: rgb(52, 161, 227);
+  background: linear-gradient(61deg, rgba(52, 161, 227, 1) 0%, rgba(27, 250, 255, 1) 100%);
+  box-shadow: 0 0 10px 2px rgba(27, 250, 255, 0.3);
+  margin-left: 10px;
+  flex: 1;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px -1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.squareTargetForm {
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300px;
+  padding: 0 10px;
+  background-image: url("../assets/metal-border.png");
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.squareTargetForm input {
+  display: inline-block;
+  width: 100%;
+  max-width: 30px;
+  background-color: transparent;
+  border: none;
+  margin: 3px;
+  font-size: 24px;
+  text-align: center;
+  color: #9bdaff;
+  font-weight: bolder;
+  text-shadow: 0 0 10px rgba(27, 250, 255, 1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.showShotCordinates {
+  opacity: 0;
+  display: none;
+  box-shadow: 0 0 30px 30px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  text-align: center;
+  animation: shotsDisplay 1s;
+}
+.showShotCordinates span {
+  display: inline-block;
+  padding: 20px 10px;
+  font-size: 30px;
+  text-align: center;
+  color: #9bdaff;
+  font-weight: bolder;
+  text-shadow: 0 0 10px rgba(27, 250, 255, 1);
+}
+
+@keyframes shotsDisplay {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(4);
+  }
+  100% {
+    opacity: 0;
+  }
+}
