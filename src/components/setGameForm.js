@@ -99,7 +99,7 @@ function SetGameForm(props) {
            <div className="selectShape">
              <span>Shape Board:</span>
           <label>
-          <input name="shape" value="rect" onChange={handleChangeOnInputs} type="radio" checked  required /> 
+          <input disabled={!curretError} name="shape" value="rect" onChange={handleChangeOnInputs} type="radio"  required /> 
           <div className="markupOne"></div>
           </label>        
            <label>
@@ -113,7 +113,7 @@ function SetGameForm(props) {
            </div>
            {curretError ? <p className="errorsMessage">difficolty and ships count cannot be more than half of the board</p> : <p className="noErrors"></p>}
           {curretError 
-             ? <button className="buttonStart" type="submit" >BUILD GAME</button>
+             ? <button className="buttonStart" type="submit">BUILD GAME</button>
              : <button className="buttonStart" disabled={spinner} onClick={()=>setTheGame(!playNow)} type="button">{spinner ? <div className="loader"></div> : 'Play'}</button>
           }
            

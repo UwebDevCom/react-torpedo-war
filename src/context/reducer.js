@@ -12,9 +12,9 @@ function generateData(cols, rows, shape) {
 
         const skippingSquare = cols - rows > 0 ? cols / rows : rows / cols;
 
-        const middleCols = cols  % 2 > 0 ? [Math.floor(cols / 2)] : [cols / 2, cols / 2 - 1];
-        const middleRows = rows  % 2 > 0 ? [Math.floor(rows / 2)] : [rows / 2, rows / 2 - 1];
-       
+        const middleCols = cols % 2 > 0 ? [Math.floor(cols / 2)] : [cols / 2, cols / 2 - 1];
+        const middleRows = rows % 2 > 0 ? [Math.floor(rows / 2)] : [rows / 2, rows / 2 - 1];
+
 
         if (middleCols.includes(i)) {
             return true
@@ -24,23 +24,23 @@ function generateData(cols, rows, shape) {
 
             return true
         }
-        if(rows <= 4 || cols <=4 ){
+        if (rows <= 4 || cols <= 4) {
             return false
         }
 
         const rhombusFun = () => {
             if (rows >= cols) {
-                if (i < Math.floor(cols / 2) && (Math.ceil((rows / 2)- 1)  - Math.round(i * skippingSquare) <= u  && Math.floor((rows / 2)) + Math.round(i * skippingSquare) >= u)) {
+                if (i < Math.floor(cols / 2) && (Math.ceil((rows / 2) - 1) - Math.round(i * skippingSquare) <= u && Math.floor((rows / 2)) + Math.round(i * skippingSquare) >= u)) {
                     return true;
                 }
-                if (i > Math.floor(cols / 2) && Math.ceil((rows / 2)- 1) - Math.round((cols-1-i) * skippingSquare) <= u && Math.floor((rows / 2)) + Math.round((cols-1-i) * skippingSquare) >= u) {
+                if (i > Math.floor(cols / 2) && Math.ceil((rows / 2) - 1) - Math.round((cols - 1 - i) * skippingSquare) <= u && Math.floor((rows / 2)) + Math.round((cols - 1 - i) * skippingSquare) >= u) {
                     return true;
                 }
-            }else {
-                if (u < Math.floor(rows / 2) && (Math.ceil((cols / 2)- 1)  - Math.round(u * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
+            } else {
+                if (u < Math.floor(rows / 2) && (Math.ceil((cols / 2) - 1) - Math.round(u * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round(u * skippingSquare) >= i)) {
                     return true;
                 }
-                if (u > Math.floor(rows / 2) && Math.ceil((cols / 2)- 1) - Math.round((rows-1-u) * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round((rows-1-u) * skippingSquare) >= i) {
+                if (u > Math.floor(rows / 2) && Math.ceil((cols / 2) - 1) - Math.round((rows - 1 - u) * skippingSquare) <= i && Math.floor((cols / 2)) + Math.round((rows - 1 - u) * skippingSquare) >= i) {
                     return true;
                 }
             }
@@ -111,7 +111,7 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                         }
                     })
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
-                        generageImgSub(arr,item,i);
+                        generageImgSub(arr, item, i);
 
                         item.isSubmarine = true;
                         item.isSubmarineFound = false;
@@ -136,7 +136,7 @@ function generateSubmarines(level, maxSize, data, boardSize) {
                 let slicedDataOfSubmarine = [...dataBoard].splice(randomSquare, submarineSize);
                 if (slicedDataOfSubmarine.filter(item => item.isPushed).length === 0 && !slicedDataOfSubmarine.some(item => !item.r)) {
                     slicedDataOfSubmarine.forEach((item, i, arr) => {
-                        generageImgSub(arr,item,i);
+                        generageImgSub(arr, item, i);
 
                         item.isSubmarine = true;
                         item.isSubmarineFound = false;
@@ -196,7 +196,7 @@ function getResults(submarines, level, action) {
     return results;
 }
 
-function generageImgSub(arr , item , i){
+function generageImgSub(arr, item, i) {
     if (arr.length > 1) {
         switch (i) {
             case 0:
@@ -214,17 +214,17 @@ function generageImgSub(arr , item , i){
     }
 }
 
-function createIslands(amountOfIsland , boardData,shouldBeIslands){
-    if (shouldBeIslands){
-        const totalSquaresForIslands = Math.ceil((amountOfIsland/100) *boardData.map(item=>item.r).length);
-        return generateIslands(totalSquaresForIslands , boardData);
+function createIslands(amountOfIsland, boardData, shouldBeIslands) {
+    if (shouldBeIslands) {
+        const totalSquaresForIslands = Math.ceil((amountOfIsland / 100) * boardData.map(item => item.r).length);
+        return generateIslands(totalSquaresForIslands, boardData);
     }
 }
-function generateIslands(totalSquaresForIslands,boardData){
+function generateIslands(totalSquaresForIslands, boardData) {
     let islandsLocations = [];
     while (totalSquaresForIslands > islandsLocations.length) {
-        let randomIslandLocation = Math.round(Math.random()*boardData.length);
-        if(!boardData[randomIslandLocation].isPushed && boardData[randomIslandLocation].r){
+        let randomIslandLocation = Math.round(Math.random() * boardData.length);
+        if (!boardData[randomIslandLocation].isPushed && boardData[randomIslandLocation].r) {
             boardData[randomIslandLocation].islnd = true;
             islandsLocations.push(boardData[randomIslandLocation])
         }
@@ -233,30 +233,36 @@ function generateIslands(totalSquaresForIslands,boardData){
 }
 
 
-function fireSquareByForm(boardData , dataForm) {
-    
+function fireSquareByForm(boardData, dataForm) {
+
     let squareHasFired = false;
     const showFireResults = document.querySelector('.showShotCordinates');
-    
-    boardData.map(squareData=>{
-        if(squareData.x === dataForm.xAxis && squareData.y === dataForm.yAxis && squareData.r){
-            squareData.isSubmarineFound  = true;
-            squareHasFired = true;
+
+    boardData.map(squareData => {
+        if (squareData.x === dataForm.xAxis && squareData.y === dataForm.yAxis && squareData.r) {
+            if (squareData.isSubmarineFound) {
+                squareHasFired = false;
+            }
+            else {
+                squareData.isSubmarineFound = true;
+                squareHasFired = true;
+            }
         }
     });
-    
-    if (squareHasFired)
-    {showFireResults.style.display = "block";
-    setTimeout(()=>{
-        showFireResults.style.display = "none";
-    },1000);
-    return boardData}
-    else 
-    alert('No matchs on board');
-    
-    return boardData
 
-} 
+    if (squareHasFired) {
+        showFireResults.style.display = "block";
+        setTimeout(() => {
+            showFireResults.style.display = "none";
+        }, 1000);
+        return boardData
+    }
+    else
+        alert('No matchs on board');
+
+    return boardData;
+
+}
 
 
 function gameReducer(state, action) {
@@ -272,7 +278,7 @@ function gameReducer(state, action) {
             state.submarines = generateSubmarines(state.numberOfShips, state.level, state.boardData, state.cols);
             state.totalSubmarines = totalSubmarinesFun(state.submarines);
             state.resultsData = getResults(state.submarines, state.level);
-            state.islands = createIslands(10,state.boardData, action.payload.islands);
+            state.islands = createIslands(10, state.boardData, action.payload.islands);
             return {
                 ...state,
             }
@@ -290,14 +296,14 @@ function gameReducer(state, action) {
                 resultsData: getResults(state.submarines, state.level, action.payload)
             }
 
-            case 'FIRE':
-                
-                return {
-                    ...state,
-                    boardData: fireSquareByForm(state.boardData, action.payload),
-                    resultsData: getResults(state.submarines, state.level, action.payload)
+        case 'FIRE':
 
-                }
+            return {
+                ...state,
+                boardData: fireSquareByForm(state.boardData, action.payload),
+                resultsData: getResults(state.submarines, state.level, action.payload)
+
+            }
 
         default:
             return state

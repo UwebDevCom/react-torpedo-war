@@ -18,6 +18,7 @@ function FindSquare(props) {
     const dataRef = () => {
         fireSquareByForm(formData);
         document.getElementById('fireForm').reset();
+        document.getElementById('squareTargetInputId').focus();
     };
     const choosenDataSquareByForm = (event) => {
         setFormData({
@@ -43,7 +44,7 @@ function FindSquare(props) {
         <>
                 <form className="squareTargetForm" id="fireForm">
             <div className="findSquareContainer">
-                <input onChange={choosenDataSquareByForm} type="text" name="xAxis" maxLength="1" pattern="[0-9]" />
+                <input id="squareTargetInputId" onChange={choosenDataSquareByForm} type="text" name="xAxis" maxLength="1" pattern="[0-9]" />
                 <input onChange={choosenDataSquareByForm} type="text" name="yAxis" maxLength="1" pattern="[A-Za-z]" />
                 <button onClick={dataRef} className="squareTargetBtn" type="button">FIRE</button>
             </div>
