@@ -11,26 +11,25 @@ const formReducer = (state, event) => {
    const initialState = {
     columns: "8",
     difficolty: "4",
-    islands: "on",
+    islands: null,
     rows: "8",
     shape: "rect",
     ships: "8"
   };
 
+
 function SetGameForm(props) {
     const limitedSize = 20;
-    const {setNewGameData ,startNewGameFun, totalSubmarines} = useContext(GameContext);
-
-
-    const [formData, setFormData] = useReducer(formReducer, initialState);
-    const [curretError, setErrors] = useState(true);
     
+    const {setNewGameData ,startNewGameFun, totalSubmarines} = useContext(GameContext);
+    const [formData, setFormData] = useReducer(formReducer, initialState);
+    
+    const [curretError, setErrors] = useState(true);    
     const [playNow, setTheGame] = useState(false);
     const [spinner, setSpinner] = useState(false);
     const [checkboxValue,setCheckboxValue] = useState(false);
 
     useEffect(() => {
-      console.log(formData)
       if(playNow)
       startNewGameFun(playNow);    
       if(formData.rows*formData.columns/2 < totalSubmarines){
@@ -83,11 +82,11 @@ function SetGameForm(props) {
         <form onSubmit={handleSubmit}>
            <div className="form-group">
            <label>Rows:</label>
-           <input disabled={!curretError} value={formData.columns} name="rows" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
+           <input disabled={!curretError} value={formData.rows} name="rows" onChange={handleChangeOnInputs} type="number" max={limitedSize} />
            </div>
            <div className="form-group">
            <label>Columns:</label>
-           <input disabled={!curretError} value={formData.rows} name="columns"  onChange={handleChangeOnInputs} type="number" max={limitedSize} />
+           <input disabled={!curretError} value={formData.columns} name="columns"  onChange={handleChangeOnInputs} type="number" max={limitedSize} />
            </div>
            <div className="form-group">
            <label>Difficolty: </label>
