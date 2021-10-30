@@ -5,28 +5,41 @@ import ImageOfSubmarine from './imageOfSubmarine';
 import ImageOfIsland from './imageOfIsland';
 
 function BoradGame() {
-    const { boardData ,totalSubmarines , resultsDataFun ,cols, rows} = useContext(GameContext);
+    const { boardData ,totalSubmarines , resultsDataFun ,cols, rows, strikesCount} = useContext(GameContext);
     const [count, setCount] = useState(0);
     const [widthSquareSize, setWidthSquareSize] = useState(0);
     const [isFinished, setGameStatus] = useState(false);
     
     const findSubmarines = (e,item) => {
+        item.dirty = true;
         if(item.r){
         if (e.currentTarget.classList.contains("clicked")){
             return null
         }
         e.preventDefault();
         e.currentTarget.classList.add('clicked');
+        
         if(item.isSubmarine){
             setCount(count+1);
             item.isSubmarineFound = true;
             e.currentTarget.classList.add('isSub');
         }
+        if(item.islnd){
+            e.currentTarget.classList.add('isSub');
+            e.currentTarget.classList.remove('clicked');
+            item.isIslandFound = true;
+        }
+
         resultsDataFun(item);
     }
     }
     
     useEffect(()=>{
+        console.log(strikesCount)
+        if(strikesCount.length === 0) {
+            setCount(0);
+        }
+        console.log(totalSubmarines, count,strikesCount)
         if (count === totalSubmarines){
             setGameStatus(true);
         }
@@ -34,7 +47,7 @@ function BoradGame() {
         if(squareWidth > 0) {
             setWidthSquareSize(squareWidth);
         }    
-    },[count,widthSquareSize])
+    },[count,widthSquareSize,strikesCount])
 
     const createAxises = () => {
         let x = [];
@@ -64,7 +77,7 @@ function BoradGame() {
             moveMotion--;        
              e.target.style.transform = `translate(${moveMotion*(moveMotion%2 >0 ? -1: 1)}px)`;       
         if (moveMotion === 0) {
-            clearInterval(shakeIsland)
+            clearInterval(shakeIsland);
         }
         });
         findSubmarines(e,item);
@@ -84,7 +97,7 @@ function BoradGame() {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
                     <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
-                    data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey " +  (item.isSubmarineFound && item.isSubmarine  ? 'isSub' :  item.isSubmarineFound ? 'clicked' : null)} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
+                    data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey " +  (item.isSubmarineFound && item.isSubmarine  ? 'isSub' :  item.isSubmarineFound ? 'clicked' : '')} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : item.islnd ? <ImageOfIsland />: null} </button>
                     </React.Fragment>)

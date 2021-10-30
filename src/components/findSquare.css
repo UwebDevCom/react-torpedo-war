@@ -7,6 +7,16 @@
   /* padding: 5px; */
   box-shadow: 0 10px 14px rgba(0, 0, 0, 0.5) inset;
 }
+.findSquareContainer .findSquareInput {
+  position: relative;
+}
+.findSquareContainer .findSquareInput label {
+  top: 24px;
+  right: 5px;
+  position: absolute;
+  color: #fff;
+  font-size: 10px;
+}
 .squareTargetBtn {
   cursor: pointer;
   padding: 10px;
@@ -40,8 +50,8 @@
   max-width: 30px;
   background-color: transparent;
   border: none;
-  margin: 3px;
-  font-size: 24px;
+  margin: 4px;
+  font-size: 15px;
   text-align: center;
   color: #9bdaff;
   font-weight: bolder;

@@ -10,6 +10,32 @@
   background-size: cover;
   margin: 0 auto;
 }
+
+.gameResultsWrapper .gameInfoContainer
+{
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+.gameResultsWrapper .gameInfoContainer .hitsInfoContainer {
+  text-align: center;
+  margin: 20px ;
+  padding: 10px 4px;
+  border-bottom: 1px solid #ffffff80;
+}
+.gameResultsWrapper .gameInfoContainer .countResults
+{
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+.gameResultsWrapper .gameInfoContainer .titleResults
+{
+  display: block;
+  font-size: 12px;
+  opacity: .8;
+}
 .gameResultsContainer {
   top: 50%;
   left: 50%;
@@ -72,7 +98,7 @@
   width: 100%;
   text-align: center;
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -30%);
   position: absolute;

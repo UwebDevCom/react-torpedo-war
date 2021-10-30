@@ -42,17 +42,23 @@ function FindSquare(props) {
 
     return (
         <>
-                <form className="squareTargetForm" id="fireForm">
-            <div className="findSquareContainer">
-                <input id="squareTargetInputId" onChange={choosenDataSquareByForm} type="text" name="xAxis" maxLength="1" pattern="[0-9]" />
-                <input onChange={choosenDataSquareByForm} type="text" name="yAxis" maxLength="1" pattern="[A-Za-z]" />
-                <button onClick={dataRef} className="squareTargetBtn" type="button">FIRE</button>
-            </div>
-        </form>
-        <div role="alert" className="showShotCordinates">
+            <form className="squareTargetForm" id="fireForm">
+                <div className="findSquareContainer">
+                    <div className="findSquareInput">
+                        <label>X-Axis</label>
+                        <input id="squareTargetInputId" onChange={choosenDataSquareByForm} type="text" name="xAxis" maxLength="2" pattern="[0-9]" />
+                    </div>
+                    <div className="findSquareInput">
+                        <label>Y-Axis</label>
+                        <input onChange={choosenDataSquareByForm} type="text" name="yAxis" maxLength="1" pattern="[A-Za-z]" />
+                    </div>
+                    <button onClick={dataRef} className="squareTargetBtn" type="button">FIRE</button>
+                </div>
+            </form>
+            <div role="alert" className="showShotCordinates">
                 <span>{formData.xAxis}</span>
                 <span>{formData.yAxis}</span>
-            </div> 
+            </div>
         </>
     )
 }

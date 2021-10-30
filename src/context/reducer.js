@@ -166,9 +166,9 @@ function totalSubmarinesFun(submarines) {
     return totalSubmarines;
 }
 
-function getResults(submarines, level, action) {
+function getResults(submarines, level, action,data ,strikesCount) {
+    strikesCount = data?.filter(item=>item.dirty);
     let results = [];
-
     for (let i = 0; i < level; i++) {
         let result = {};
         if (submarines) {
@@ -193,7 +193,7 @@ function getResults(submarines, level, action) {
         }
 
     }
-    return results;
+    return {results,strikesCount };
 }
 
 function generageImgSub(arr, item, i) {
@@ -234,7 +234,6 @@ function generateIslands(totalSquaresForIslands, boardData) {
 
 
 function fireSquareByForm(boardData, dataForm) {
-
     let squareHasFired = false;
     const showFireResults = document.querySelector('.showShotCordinates');
 
@@ -245,6 +244,7 @@ function fireSquareByForm(boardData, dataForm) {
             }
             else {
                 squareData.isSubmarineFound = true;
+                squareData.dirty = true;
                 squareHasFired = true;
             }
         }
@@ -265,6 +265,16 @@ function fireSquareByForm(boardData, dataForm) {
 }
 
 
+function clearBoradfun({boardData}){
+    document.querySelectorAll('.gameKey').forEach(el=>el.classList.remove('clicked') | el.classList.remove('isSub'));
+    let cleanBoardData = boardData.map(item=>{
+        item['dirty'] = false;
+        item['isSubmarineFound'] = false
+        return item
+    });
+    return cleanBoardData;
+}
+
 function gameReducer(state, action) {
 
     switch (action.type) {
@@ -277,7 +287,7 @@ function gameReducer(state, action) {
             state.boardData = generateData(state.rows, state.cols, state.shape);
             state.submarines = generateSubmarines(state.numberOfShips, state.level, state.boardData, state.cols);
             state.totalSubmarines = totalSubmarinesFun(state.submarines);
-            state.resultsData = getResults(state.submarines, state.level);
+            state.resultsData = getResults(state.submarines, state.level).results;
             state.islands = createIslands(10, state.boardData, action.payload.islands);
             return {
                 ...state,
@@ -290,10 +300,10 @@ function gameReducer(state, action) {
             }
 
         case 'RESULTS':
-
             return {
                 ...state,
-                resultsData: getResults(state.submarines, state.level, action.payload)
+                resultsData: getResults(state.submarines, state.level, action.payload,state.boardData,state.strikesCount).results,
+                strikesCount: getResults(state.submarines, state.level, action.payload, state.boardData).strikesCount,
             }
 
         case 'FIRE':
@@ -301,9 +311,20 @@ function gameReducer(state, action) {
             return {
                 ...state,
                 boardData: fireSquareByForm(state.boardData, action.payload),
-                resultsData: getResults(state.submarines, state.level, action.payload)
+                resultsData: getResults(state.submarines, state.level, action.payload, state.boardData).results,
+                strikesCount: getResults(state.submarines, state.level, action.payload, state.boardData).strikesCount
 
             }
+
+            case 'CLEAR':
+            console.log('clearBoard')
+                return {
+                    ...state,
+                    boardData: clearBoradfun(state),
+                    resultsData: getResults(state.submarines, state.level, action.payload, state.boardData).results,
+                    strikesCount: []
+    
+                }
 
         default:
             return state

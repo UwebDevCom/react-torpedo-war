@@ -12,7 +12,7 @@ function App() {
   const [isShow, toggleResults] = useState(false);
   
   useEffect(() => {
-  console.log('isShow',isShow)
+  // console.log('isShow',isShow)
   }, [startNewGame,isShow])
 
   return (

@@ -1,22 +1,42 @@
-import React, { useState ,useContext } from 'react'
+import React, { useEffect ,useContext, useState} from 'react'
 import './gameResults.css';
 import ImageOfSubmarine from './imageOfSubmarine';
-import { GameContext } from '../context/context';
+import { GameContext} from '../context/context';
 
 function GameResults({isShow}) {
     
-    const {resultsData} = useContext(GameContext);
-   
+    const {resultsData,boardData, strikesCount, cols, rows ,clearBoard,submarines} = useContext(GameContext);
+    const [foundsubCount, setCountSubs] = useState(0);
+    useEffect(() => {
+        setCountSubs(boardData.filter(item=>item['isSubmarineFound']).length); 
+        console.log(resultsData,submarines)
+    },[resultsData,strikesCount])
 
     return (
         <>
        {isShow ? <div className="gameResultsWrapper">
-            {/* <button className="showResultsBtn" onClick={()=>toggleResults(!isShow)} >RESULTS</button> */}
                 <span className="gameResultsContainerTitle">RESULTS STATUS</span>
-         <div className={ "gameResultsContainer"}>
+         <div className="gameResultsContainer">
+             <div className="gameInfoContainer">
+                <div className="hitsInfoContainer">
+                <span className="countResults">{strikesCount ? strikesCount.length : 0}</span>
+                <span className="titleResults">Square Hits</span>
+                </div>
+                <div className="hitsInfoContainer">
+                <span className="countResults">{cols + ' X ' + rows}</span>
+                <span className="titleResults">Board Size</span>
+                </div>
+                <div className="hitsInfoContainer">
+                <span className="countResults">{foundsubCount}</span>
+                <span className="titleResults">Ships Hits</span>
+                </div>
+                <div>
+                <button onClick={clearBoard} className="clearBoard squareTargetBtn">Clear Board</button>
+                </div>
+             </div>
             <ul>
             {resultsData.map((item, i)=>{
-                console.log(item)
+                // console.log(item)
                return (
                 <li key={i + 'isItemSub'}>
                     <div className="d-flex row-big">
