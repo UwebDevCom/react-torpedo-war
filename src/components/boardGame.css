@@ -261,6 +261,7 @@ button.finishGameSquate img {
     font-weight: bolder;
     text-shadow: 0 0 10px rgba(27, 250, 255, 1);
     animation: timerDisplay 1s infinite;
+    transform-origin: center;
 }
 
 
