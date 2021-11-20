@@ -241,6 +241,43 @@ button.finishGameSquate img {
   }
   }
 
+  .clock-timer-container
+{
+    position: absolute;
+    top: 0;
+    right:0;
+    bottom: 0;
+    left:0;
+    z-index: 1000;
+    display: flex;
+}
+
+.clock-timer-container span{
+    margin: auto;
+    padding: 20px 10px;
+    font-size: 30px;
+    text-align: center;
+    color: #9bdaff;
+    font-weight: bolder;
+    text-shadow: 0 0 10px rgba(27, 250, 255, 1);
+    animation: timerDisplay 1s infinite;
+}
+
+
+@keyframes timerDisplay {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(4);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
   @media screen and (max-width:560px) {
     .gameStartContainer{
         background-size: 410px;

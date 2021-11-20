@@ -29,6 +29,7 @@ function App() {
               <GameResults isShow={isShow} />
               <BoradGame />
               <FindSquare />
+              
             </>
             ) : ''
           }

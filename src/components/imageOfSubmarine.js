@@ -9,15 +9,15 @@ import headVertic from '../assets/head-vertic.svg';
 import tailVertic from '../assets/tail-vertic.svg';
 import oneVertic from '../assets/one-vertic.svg';
 
- function ImageOfSubmarine({data: {ImgSubmarine ,position}}) {
+ function ImageOfSubmarine({hideShip,data: {ImgSubmarine ,position}}) {
 
     const buildImageOfShip = (position) =>{
             if(position=== 'horiz'){
-                return (<img className='horiz'
-                src={ImgSubmarine === 'middle' ? middle : ImgSubmarine ==='head' ? head : ImgSubmarine ==='tail' ? tail : one }  alt={ImgSubmarine} />)
+                return (!hideShip ?<img className='horiz'
+                src={ImgSubmarine === 'middle' ? middle : ImgSubmarine ==='head' ? head : ImgSubmarine ==='tail' ? tail : one }  alt={ImgSubmarine} />: null)
             }else {
-                return (<img className='vertic'
-                src={ImgSubmarine === 'middle' ? middleVertic : ImgSubmarine ==='head' ? headVertic : ImgSubmarine ==='tail' ? tailVertic : oneVertic }  alt={ImgSubmarine} />)
+                return (!hideShip ? <img className='vertic'
+                src={ImgSubmarine === 'middle' ? middleVertic : ImgSubmarine ==='head' ? headVertic : ImgSubmarine ==='tail' ? tailVertic : oneVertic }  alt={ImgSubmarine} />: null)
             }
     }
     return (

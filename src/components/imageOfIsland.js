@@ -2,12 +2,15 @@ import React from 'react'
 import islandicon from '../assets/islandicon.svg';
 
 
-const buildImageOfIsland = () =>{
-    return (<img style={{padding: '15%'}} className='islandImg'
-        src={ islandicon}  alt="island" />)
-    }
 
- function ImageOfIsland() {
+
+ function ImageOfIsland({hideIsland}) {
+
+    const buildImageOfIsland = () =>{
+        return (!hideIsland ? <img style={{padding: '15%'}} className='islandImg'
+            src={ islandicon}  alt="island" />: null)
+        }
+
     return (
         <React.Fragment>
         {buildImageOfIsland() }

@@ -8,7 +8,9 @@ function BoradGame() {
     const { boardData ,totalSubmarines , resultsDataFun ,cols, rows, strikesCount} = useContext(GameContext);
     const [count, setCount] = useState(0);
     const [widthSquareSize, setWidthSquareSize] = useState(0);
+    const [showingBoard, setshowingBoard] = useState(false);
     const [isFinished, setGameStatus] = useState(false);
+    const [timer, setTimer] = useState(5);
     
     const findSubmarines = (e,item) => {
         item.dirty = true;
@@ -33,13 +35,23 @@ function BoradGame() {
         resultsDataFun(item);
     }
     }
-    
     useEffect(()=>{
-        console.log(strikesCount)
+        let startTimer = setInterval(()=>{
+            setTimer((prev)=>prev-1) ;
+            if (timer < 0 ) {
+                clearInterval(startTimer);
+            } 
+        },1000);
+        setTimeout(()=>{
+            setshowingBoard(true);
+            setTimer(0);
+        },5000)
+    },[])
+    useEffect(()=>{
+       
         if(strikesCount.length === 0) {
             setCount(0);
         }
-        console.log(totalSubmarines, count,strikesCount)
         if (count === totalSubmarines){
             setGameStatus(true);
         }
@@ -85,8 +97,10 @@ function BoradGame() {
 }
     return (
         <>
-        
-        <div className="board-container" style={{maxWidth: cols <= rows ? ((window.innerHeight/2)/rows) * cols+'px' : null }}>
+         {!showingBoard ? <div class="clock-timer-container">
+                            <span>{timer}</span>
+                        </div>: null}
+        <div className="board-container" style={{maxWidth: cols <= rows ? ((window.innerHeight/2)/rows) * cols+'px' : null  }}>
             <div className="left"></div>
             <div className="right"></div>
             <div className="top"></div>
@@ -96,10 +110,10 @@ function BoradGame() {
             {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
-                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
+                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={ !showingBoard || isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
                     data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey " +  (item.isSubmarineFound && item.isSubmarine  ? 'isSub' :  item.isSubmarineFound ? 'clicked' : '')} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
-                    {item.isSubmarine ? <ImageOfSubmarine position={item.position} data={item} /> : item.islnd ? <ImageOfIsland />: null} </button>
+                    {item.isSubmarine ? <ImageOfSubmarine hideShip={showingBoard} position={item.position} data={item} /> : item.islnd ? <ImageOfIsland hideIsland={showingBoard} />: null} </button>
                     </React.Fragment>)
             }
         </div> 
