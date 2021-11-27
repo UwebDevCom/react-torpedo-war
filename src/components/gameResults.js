@@ -5,13 +5,17 @@ import { GameContext} from '../context/context';
 
 function GameResults({isShow}) {
     
-    const {resultsData,boardData, strikesCount, cols, rows ,clearBoard,submarines} = useContext(GameContext);
+
+    const {resultsData,boardData, strikesCount, cols, rows ,clearBoard,submarines ,gamesTableResults} = useContext(GameContext);
     const [foundsubCount, setCountSubs] = useState(0);
     useEffect(() => {
         setCountSubs(boardData.filter(item=>item['isSubmarineFound']).length); 
-        console.log(resultsData,submarines)
+       console.log(gamesTableResults)
+        return ()=>{
+            console.log('clean up')
+        }
     },[resultsData,strikesCount])
-
+    
     return (
         <>
        {isShow ? <div className="gameResultsWrapper">
@@ -34,9 +38,13 @@ function GameResults({isShow}) {
                 <button onClick={clearBoard} className="clearBoard squareTargetBtn">Clear Board</button>
                 </div>
              </div>
+            {gamesTableResults && gamesTableResults.map((item,index)=>
+            <div className="recordResult" key={Math.random()*1000+ index}>
+                 <span>{item.boardSize}</span> <span>{item.strikesCount}</span> <span>{item.totalSubmarines}</span>
+                 </div>
+                 )};
             <ul>
             {resultsData.map((item, i)=>{
-                // console.log(item)
                return (
                 <li key={i + 'isItemSub'}>
                     <div className="d-flex row-big">

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './App.css';
 import StartTheGame from './components/startTheGame';
 import GameResults from './components/gameResults';
@@ -10,10 +10,7 @@ function App() {
 
   const { startNewGame } = useContext(GameContext);
   const [isShow, toggleResults] = useState(false);
-  
-  useEffect(() => {
-  // console.log('isShow',isShow)
-  }, [startNewGame,isShow])
+
 
   return (
     <div className="App">

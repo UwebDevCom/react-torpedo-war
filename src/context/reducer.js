@@ -166,8 +166,8 @@ function totalSubmarinesFun(submarines) {
     return totalSubmarines;
 }
 
-function getResults(submarines, level, action,data ,strikesCount) {
-    strikesCount = data?.filter(item=>item.dirty);
+function getResults(submarines, level, action, data, strikesCount) {
+    strikesCount = data?.filter(item => item.dirty);
     let results = [];
     for (let i = 0; i < level; i++) {
         let result = {};
@@ -193,7 +193,7 @@ function getResults(submarines, level, action,data ,strikesCount) {
         }
 
     }
-    return {results,strikesCount };
+    return { results, strikesCount };
 }
 
 function generageImgSub(arr, item, i) {
@@ -265,9 +265,9 @@ function fireSquareByForm(boardData, dataForm) {
 }
 
 
-function clearBoradfun({boardData}){
-    document.querySelectorAll('.gameKey').forEach(el=>el.classList.remove('clicked') | el.classList.remove('isSub'));
-    let cleanBoardData = boardData.map(item=>{
+function clearBoradfun({ boardData }) {
+    document.querySelectorAll('.gameKey').forEach(el => el.classList.remove('clicked') | el.classList.remove('isSub'));
+    let cleanBoardData = boardData.map(item => {
         item['dirty'] = false;
         item['isSubmarineFound'] = false
         return item
@@ -300,9 +300,10 @@ function gameReducer(state, action) {
             }
 
         case 'RESULTS':
+            
             return {
                 ...state,
-                resultsData: getResults(state.submarines, state.level, action.payload,state.boardData,state.strikesCount).results,
+                resultsData: getResults(state.submarines, state.level, action.payload, state.boardData, state.strikesCount).results,
                 strikesCount: getResults(state.submarines, state.level, action.payload, state.boardData).strikesCount,
             }
 
@@ -316,19 +317,39 @@ function gameReducer(state, action) {
 
             }
 
-            case 'CLEAR':
-            console.log('clearBoard')
-                return {
-                    ...state,
-                    boardData: clearBoradfun(state),
-                    resultsData: getResults(state.submarines, state.level, action.payload, state.boardData).results,
-                    strikesCount: []
-    
-                }
+        case 'CLEAR':
+            state.gamesTableResults = [];
+            return {
+                ...state,
+                boardData: clearBoradfun(state),
+                resultsData: getResults(state.submarines, state.level, action.payload, state.boardData).results,
+                strikesCount: []
+
+            }
+
+        case 'AGAIN':
+
+            const newGameResult = {resultsData: state.resultsData[0] ,totalSubmarines:state.totalSubmarines, strikesCount:state.strikesCount.length, boardSize: state.cols + "X"+ state.rows}; 
+            state.gamesTableResults.push(newGameResult);
+
+            return {
+                ...state,
+                level: null,
+                rows: null,
+                cols: null,
+                shape: null,
+                islands: null,
+                startNewGame: false,
+                boardData: clearBoradfun(state),
+                resultsData: getResults(state.submarines, state.level, action.payload, state.boardData).results,
+                strikesCount: [],
+                // gamesTableResults: state.gamesTableResults
+            }
 
         default:
             return state
     }
+
 };
 
 

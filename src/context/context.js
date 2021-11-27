@@ -13,7 +13,8 @@ const initialState = {
     totalSubmarines: 0,
     resultsData: null,
     fireSquareByForm: null,
-    strikesCount:[]
+    strikesCount:[],
+    gamesTableResults : []
 }
 
 const GameContext = createContext({
@@ -30,9 +31,11 @@ const GameContext = createContext({
     startNewGameFun: (value) => { },
     resultsData: initialState.resultsData,
     resultsDataFun: (value) => { },
+    startTheGameAgainFun: (value) => { },
     fireSquareByForm : (value) => { },
     clearBoard : (value) => { },
-    strikesCount: initialState.strikesCount
+    strikesCount: initialState.strikesCount,
+    gamesTableResults: initialState.gamesTableResults
 });
 
 
@@ -75,9 +78,17 @@ function GameProvider(props) {
         });
     }
 
+    function startTheGameAgainFun(value) {
+        dispatch({
+            type: 'AGAIN',
+            payload: value
+        });
+    }
+
+
     return (
         <GameContext.Provider
-            value={{cols: state.cols, rows: state.rows, startNewGame: state.startNewGame, submarines: state.submarines, setNewGameData, startNewGameFun, resultsDataFun,clearBoard,fireSquareByForm, resultsData: state.resultsData, strikesCount: state.strikesCount, boardData: state.boardData, totalSubmarines: state.totalSubmarines }} {...props} />
+            value={{cols: state.cols, rows: state.rows, startNewGame: state.startNewGame, submarines: state.submarines, setNewGameData, startNewGameFun, resultsDataFun,startTheGameAgainFun,clearBoard,fireSquareByForm, resultsData: state.resultsData, strikesCount: state.strikesCount, boardData: state.boardData, totalSubmarines: state.totalSubmarines,gamesTableResults: state.gamesTableResults }} {...props} />
     )
 }
 

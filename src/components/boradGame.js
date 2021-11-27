@@ -5,7 +5,7 @@ import ImageOfSubmarine from './imageOfSubmarine';
 import ImageOfIsland from './imageOfIsland';
 
 function BoradGame() {
-    const { boardData ,totalSubmarines , resultsDataFun ,cols, rows, strikesCount} = useContext(GameContext);
+    const { boardData ,totalSubmarines , resultsDataFun ,cols, rows, strikesCount ,startTheGameAgainFun} = useContext(GameContext);
     const [count, setCount] = useState(0);
     const [widthSquareSize, setWidthSquareSize] = useState(0);
     const [showingBoard, setshowingBoard] = useState(false);
@@ -45,7 +45,10 @@ function BoradGame() {
         setTimeout(()=>{
             setshowingBoard(true);
             setTimer(0);
-        },5000)
+        },5000);
+        return ()=>{
+            console.log('clean up')
+        }
     },[])
     useEffect(()=>{
        
@@ -58,7 +61,10 @@ function BoradGame() {
         const squareWidth = document.querySelector('.gameKey').getBoundingClientRect().width;
         if(squareWidth > 0) {
             setWidthSquareSize(squareWidth);
-        }    
+        }  
+        return ()=>{
+            console.log('clean up')
+        }  
     },[count,widthSquareSize,strikesCount])
 
     const createAxises = () => {
@@ -97,7 +103,7 @@ function BoradGame() {
 }
     return (
         <>
-         {!showingBoard ? <div class="clock-timer-container">
+         {!showingBoard ? <div className="clock-timer-container">
                             <span>{timer}</span>
                         </div>: null}
         <div className="board-container" style={{maxWidth: cols <= rows ? ((window.innerHeight/2)/rows) * cols+'px' : null  }}>
@@ -117,7 +123,9 @@ function BoradGame() {
                     </React.Fragment>)
             }
         </div> 
-        {isFinished ? <div className="finishGame"><span>You Win</span><button onClick={()=>window.location.reload()}>Again</button></div> : null}
+        {isFinished ? <div className="finishGame"><span>You Win</span>
+            <button onClick={startTheGameAgainFun}>Again</button>
+        </div> : null}
         </>
     )
 }

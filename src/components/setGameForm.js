@@ -30,6 +30,13 @@ function SetGameForm(props) {
     const [checkboxValue,setCheckboxValue] = useState(false);
 
     useEffect(() => {
+      return () => {
+        setErrors(true); 
+        console.log('cleanit')
+      }
+    }, []);
+
+    useEffect(() => {
       if(playNow)
       startNewGameFun(playNow);    
       if(formData.rows*formData.columns/2 < totalSubmarines){
