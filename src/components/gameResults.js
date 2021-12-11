@@ -10,9 +10,7 @@ function GameResults({isShow}) {
     const [foundsubCount, setCountSubs] = useState(0);
     useEffect(() => {
         setCountSubs(boardData.filter(item=>item['isSubmarineFound']).length); 
-       console.log(gamesTableResults)
         return ()=>{
-            console.log('clean up')
         }
     },[resultsData,strikesCount])
     

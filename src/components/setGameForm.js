@@ -32,7 +32,6 @@ function SetGameForm(props) {
     useEffect(() => {
       return () => {
         setErrors(true); 
-        console.log('cleanit')
       }
     }, []);
 
@@ -106,11 +105,11 @@ function SetGameForm(props) {
            <div className="selectShape">
              <span>Shape Board:</span>
           <label>
-          <input disabled={!curretError} name="shape" value="rect" onChange={handleChangeOnInputs} type="radio"  required /> 
+          <input disabled={!curretError} name="shape" value="rect" onChange={handleChangeOnInputs} type="radio" checked={formData.shape === 'rect'} required /> 
           <div className="markupOne"></div>
           </label>        
            <label>
-           <input disabled={!curretError} name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" required />
+           <input disabled={!curretError} name="shape" value="rhombus" onChange={handleChangeOnInputs} type="radio" checked={formData.shape === 'rhombus'} required />
            <div className="markupTwo"></div>
            </label>         
            </div>

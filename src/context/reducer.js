@@ -1,5 +1,7 @@
 
+import booom from '../assets/boom.wav';
 const abc = [];
+const snd = new Audio(booom);
 
 function generateData(cols, rows, shape) {
 
@@ -246,6 +248,7 @@ function fireSquareByForm(boardData, dataForm) {
                 squareData.isSubmarineFound = true;
                 squareData.dirty = true;
                 squareHasFired = true;
+                snd.play();
             }
         }
     });
@@ -254,7 +257,7 @@ function fireSquareByForm(boardData, dataForm) {
         showFireResults.style.display = "block";
         setTimeout(() => {
             showFireResults.style.display = "none";
-        }, 1000);
+        }, 2000);
         return boardData
     }
     else

@@ -3,6 +3,10 @@ import { GameContext } from '../context/context';
 import './boardGame.css';
 import ImageOfSubmarine from './imageOfSubmarine';
 import ImageOfIsland from './imageOfIsland';
+import booom from '../assets/boom.wav';
+
+
+const snd = new Audio(booom);
 
 function BoradGame() {
     const { boardData ,totalSubmarines , resultsDataFun ,cols, rows, strikesCount ,startTheGameAgainFun} = useContext(GameContext);
@@ -20,9 +24,10 @@ function BoradGame() {
         }
         e.preventDefault();
         e.currentTarget.classList.add('clicked');
-        
+        showFireResultsAnimation(e);
         if(item.isSubmarine){
             setCount(count+1);
+            snd.play();
             item.isSubmarineFound = true;
             e.currentTarget.classList.add('isSub');
         }
@@ -47,7 +52,6 @@ function BoradGame() {
             setTimer(0);
         },5000);
         return ()=>{
-            console.log('clean up')
         }
     },[])
     useEffect(()=>{
@@ -63,7 +67,6 @@ function BoradGame() {
             setWidthSquareSize(squareWidth);
         }  
         return ()=>{
-            console.log('clean up')
         }  
     },[count,widthSquareSize,strikesCount])
 
@@ -101,6 +104,19 @@ function BoradGame() {
         findSubmarines(e,item);
     }
 }
+
+
+const showFireResultsAnimation = (e) => {
+    const showFireResults = document.querySelector('.showShotCordinates');
+        const [x,y] = e.target.getAttribute('aria-label').split('');
+        document.querySelector('.squareTargetFormX').textContent = x;
+        document.querySelector('.squareTargetFormY').textContent = y;
+    showFireResults.style.display = "block";
+    setTimeout(() => {
+        showFireResults.style.display = "none";
+    }, 2000);
+}
+
     return (
         <>
          {!showingBoard ? <div className="clock-timer-container">
@@ -116,7 +132,7 @@ function BoradGame() {
             {
                 boardData && boardData.map(item =>
                     <React.Fragment key={item.id}>
-                    <button aria-live={item.isSubmarineFound ? "polite" : "off"} onClick={ !showingBoard || isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
+                    <button onClick={ !showingBoard || isFinished ? null :item.islnd ? (e)=>cantClickOnIsland(e, item) :  (e) => findSubmarines(e, item)}
                     data-id={item.id} className={!item.r ? "gameKey rhombus": isFinished ? "gameKey finishGameSquate" : "gameKey " +  (item.isSubmarineFound && item.isSubmarine  ? 'isSub' :  item.isSubmarineFound ? 'clicked' : '')} style={{flex:(100/cols)+'%', height: widthSquareSize+'px' }}
                     aria-label={item.x + item.y}>
                     {item.isSubmarine ? <ImageOfSubmarine hideShip={showingBoard} position={item.position} data={item} /> : item.islnd ? <ImageOfIsland hideIsland={showingBoard} />: null} </button>

@@ -39,7 +39,7 @@ function FindSquare(props) {
             }
         }
     };
-
+    
     return (
         <>
             <form className="squareTargetForm" id="fireForm">
@@ -56,8 +56,8 @@ function FindSquare(props) {
                 </div>
             </form>
             <div role="alert" className="showShotCordinates">
-                <span>{formData.xAxis}</span>
-                <span>{formData.yAxis}</span>
+                <span aria-describedby="x-axis results" className="squareTargetFormX">{formData.xAxis}</span>
+                <span  aria-describedby="y-axis results" className="squareTargetFormY">{formData.yAxis}</span>
             </div>
         </>
     )
